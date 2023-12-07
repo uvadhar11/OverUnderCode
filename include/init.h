@@ -5,10 +5,14 @@ using namespace vex;
 extern vex::brain Brain;
 
 // Declaring the Controller
-extern vex::controller Controller1; 
+extern vex::controller Controller1;
 
 // Declaring the Drivetrain Motors
 extern vex::motor LeftFrontMotor;
+extern vex::motor LeftMiddleMotor;
 extern vex::motor LeftBackMotor;
 extern vex::motor RightFrontMotor;
+extern vex::motor RightMiddleMotor;
 extern vex::motor RightBackMotor;
+extern vex::motor IntakeFlywheelMotor;
+extern vex::motor LiftMotor;

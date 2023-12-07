@@ -64,7 +64,6 @@ void autonomous(void) {
 void usercontrol(void) {
   // User control code here, inside the loop
   while (1) {
-    tester();
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
@@ -73,10 +72,65 @@ void usercontrol(void) {
     // Insert user code here. This is where you use the joystick values to
     // update your motors, etc.
     // ........................................................................
-    if (Brain.Screen.pressing()) {
-      Brain.Screen.clearScreen();
-      Brain.Screen.setCursor(1, 1);
-      Brain.Screen.print("Hello World");
+
+    // DRIVETRAIN CODE
+    double turnImportance = 1; // for changing the turn speed faster
+    double speed = 1; // changing speed
+    bool side = true; // bool for switching front and back. True: intake, False: wedge
+
+    double turnVal = Controller1.Axis1.position();
+    double forwardVal = Controller1.Axis3.position();
+    double turnVolts = (turnVal * 0.12 * speed); // multiplying the -1 so it goes the other way since it was inverted.
+    double forwardVolts = (forwardVal * 0.12 * (1 - (fabs(turnVolts)/12.0) * turnImportance) * speed);
+
+    if (side) {
+      LeftFrontMotor.spin(fwd, forwardVolts + turnVolts, volt);
+      RightFrontMotor.spin(fwd, forwardVolts - turnVolts, volt);
+      LeftMiddleMotor.spin(fwd, forwardVolts + turnVolts, volt);
+      RightMiddleMotor.spin(fwd, forwardVolts - turnVolts, volt);
+      LeftBackMotor.spin(fwd, forwardVolts + turnVolts, volt);
+      RightBackMotor.spin(fwd, forwardVolts - turnVolts, volt);
+    } else {
+      LeftFrontMotor.spin(fwd, forwardVolts - turnVolts, volt);
+      RightFrontMotor.spin(fwd, forwardVolts + turnVolts, volt);
+      LeftMiddleMotor.spin(fwd, forwardVolts - turnVolts, volt);
+      RightMiddleMotor.spin(fwd, forwardVolts + turnVolts, volt);
+      LeftBackMotor.spin(fwd, forwardVolts - turnVolts, volt);
+      RightBackMotor.spin(fwd, forwardVolts + turnVolts, volt);
+    }
+
+    // INTAKE/FLYWHEEL
+    if (Controller1.ButtonR1.pressing()) {
+      IntakeFlywheelMotor.spin(fwd, 12, volt);
+    } else if (Controller1.ButtonR2.pressing()) {
+      IntakeFlywheelMotor.spin(fwd, -12, volt);
+    } else {
+      IntakeFlywheelMotor.stop();
+    }
+
+    // LIFT
+    if (Controller1.ButtonL1.pressing()) {
+      LiftMotor.spin(fwd, 12, volt);
+    } else if (Controller1.ButtonL2.pressing()) {
+      LiftMotor.spin(fwd, -12, volt);
+    } else {
+      LiftMotor.stop();
+    }
+
+    // WINGS
+    if (Controller1.ButtonB.pressing()) {
+      // both wings
+
+    } else if (Controller1.ButtonY.pressing()) {
+      // right wing
+
+    } else if (Controller1.ButtonRight.pressing()) {
+      // left wing
+    }
+
+    // SWITCH FRONT/BACK BUTTON
+    if (Controller1.ButtonDown.pressing()) {
+      // switch front and back
     }
 
     wait(20, msec); // Sleep the task for a short amount of time to
