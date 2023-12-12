@@ -10,14 +10,16 @@
 // IMPORTS
 #include "vex.h"
 #include "init.h"
-#include "test.h"
+#include "linking.h"
 
 using namespace vex;
+using namespace std;
 
 // A global instance of competition
 competition Competition;
 
 // define your global instances of motors and other devices here
+bool side = true; // bool for switching front and back. True: intake, False: wedge
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -29,10 +31,20 @@ competition Competition;
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
 
-void pre_auton(void) {
+void pre_auton(void)
+{
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
+
+  // CALIBRATE the gyro and other sensors and stuff (also add as needed)
+  Inertial.calibrate();
+
+  // AUTON SCREEN SELECTOR STUFF
+  initalizeAutonSelector();         // set the start rectangle conditions
+  initalizeAllianceColorSelector(); // set the start alliance color selection conditions
+
+  Brain.Screen.pressed(autonScreenSelector);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -45,10 +57,27 @@ void pre_auton(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
-void autonomous(void) {
+void autonomous(void)
+{
   // ..........................................................................
   // Insert autonomous user code here.
   // ..........................................................................
+  if (autonSelected == 1)
+  {
+    auton1();
+  }
+  else if (autonSelected == 2)
+  {
+    auton2();
+  }
+  else if (autonSelected == 3)
+  {
+    auton3();
+  }
+  else if (autonSelected == 4)
+  {
+    auton4();
+  }
 }
 
 /*---------------------------------------------------------------------------*/
@@ -61,9 +90,11 @@ void autonomous(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
-void usercontrol(void) {
+void usercontrol(void)
+{
   // User control code here, inside the loop
-  while (1) {
+  while (1)
+  {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
@@ -75,61 +106,77 @@ void usercontrol(void) {
 
     // DRIVETRAIN CODE
     double turnImportance = 1; // for changing the turn speed faster
-    double speed = 1; // changing speed
-    bool side = true; // bool for switching front and back. True: intake, False: wedge
+    double speed = 1;          // changing speed
 
     double turnVal = Controller1.Axis1.position();
     double forwardVal = Controller1.Axis3.position();
     double turnVolts = (turnVal * 0.12 * speed); // multiplying the -1 so it goes the other way since it was inverted.
-    double forwardVolts = (forwardVal * 0.12 * (1 - (fabs(turnVolts)/12.0) * turnImportance) * speed);
+    double forwardVolts = (forwardVal * 0.12 * (1 - (fabs(turnVolts) / 12.0) * turnImportance) * speed);
 
-    if (side) {
+    if (side)
+    {
       LeftFrontMotor.spin(fwd, forwardVolts + turnVolts, volt);
       RightFrontMotor.spin(fwd, forwardVolts - turnVolts, volt);
       LeftMiddleMotor.spin(fwd, forwardVolts + turnVolts, volt);
       RightMiddleMotor.spin(fwd, forwardVolts - turnVolts, volt);
       LeftBackMotor.spin(fwd, forwardVolts + turnVolts, volt);
       RightBackMotor.spin(fwd, forwardVolts - turnVolts, volt);
-    } else {
-      LeftFrontMotor.spin(fwd, forwardVolts - turnVolts, volt);
-      RightFrontMotor.spin(fwd, forwardVolts + turnVolts, volt);
-      LeftMiddleMotor.spin(fwd, forwardVolts - turnVolts, volt);
-      RightMiddleMotor.spin(fwd, forwardVolts + turnVolts, volt);
-      LeftBackMotor.spin(fwd, forwardVolts - turnVolts, volt);
-      RightBackMotor.spin(fwd, forwardVolts + turnVolts, volt);
+    }
+    else
+    {
+      LeftFrontMotor.spin(reverse, forwardVolts + turnVolts, volt);
+      RightFrontMotor.spin(reverse, forwardVolts - turnVolts, volt);
+      LeftMiddleMotor.spin(reverse, forwardVolts + turnVolts, volt);
+      RightMiddleMotor.spin(reverse, forwardVolts - turnVolts, volt);
+      LeftBackMotor.spin(reverse, forwardVolts + turnVolts, volt);
+      RightBackMotor.spin(reverse, forwardVolts - turnVolts, volt);
     }
 
     // INTAKE/FLYWHEEL
-    if (Controller1.ButtonR1.pressing()) {
+    if (Controller1.ButtonR1.pressing())
+    {
       IntakeFlywheelMotor.spin(fwd, 12, volt);
-    } else if (Controller1.ButtonR2.pressing()) {
+    }
+    else if (Controller1.ButtonR2.pressing())
+    {
       IntakeFlywheelMotor.spin(fwd, -12, volt);
-    } else {
+    }
+    else
+    {
       IntakeFlywheelMotor.stop();
     }
 
     // LIFT
-    if (Controller1.ButtonL1.pressing()) {
+    if (Controller1.ButtonL1.pressing())
+    {
       LiftMotor.spin(fwd, 12, volt);
-    } else if (Controller1.ButtonL2.pressing()) {
+    }
+    else if (Controller1.ButtonL2.pressing())
+    {
       LiftMotor.spin(fwd, -12, volt);
-    } else {
+    }
+    else
+    {
       LiftMotor.stop();
     }
 
     // WINGS
-    if (Controller1.ButtonB.pressing()) {
+    if (Controller1.ButtonB.pressing())
+    {
       // both wings
-
-    } else if (Controller1.ButtonY.pressing()) {
+    }
+    else if (Controller1.ButtonY.pressing())
+    {
       // right wing
-
-    } else if (Controller1.ButtonRight.pressing()) {
+    }
+    else if (Controller1.ButtonRight.pressing())
+    {
       // left wing
     }
 
     // SWITCH FRONT/BACK BUTTON
-    if (Controller1.ButtonDown.pressing()) {
+    if (Controller1.ButtonDown.pressing())
+    {
       // switch front and back
     }
 
@@ -141,7 +188,8 @@ void usercontrol(void) {
 //
 // Main will set up the competition functions and callbacks.
 //
-int main() {
+int main()
+{
   // Set up callbacks for autonomous and driver control periods.
   Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);
@@ -150,7 +198,8 @@ int main() {
   pre_auton();
 
   // Prevent main from exiting with an infinite loop.
-  while (true) {
+  while (true)
+  {
     wait(100, msec);
   }
 }
