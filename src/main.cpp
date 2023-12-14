@@ -21,6 +21,13 @@ competition Competition;
 // define your global instances of motors and other devices here
 bool side = true; // bool for switching front and back. True: intake, False: wedge
 
+// degrees calculation function
+double revolutions(double inches)
+{
+  return inches * (48 / 60) * 600 * M_PI * 3.25; // inches * motor ticks * gear ratio * pi * wheel inches
+  // inches * 300 * (3/7) * M_PI * 4.05;
+}
+
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
 /*                                                                           */
@@ -105,8 +112,8 @@ void usercontrol(void)
     // ........................................................................
 
     // DRIVETRAIN CODE
-    double turnImportance = 1; // for changing the turn speed faster
-    double speed = 1;          // changing speed
+    double turnImportance = 0.8; // for changing the turn speed faster
+    double speed = 1;            // changing speed
 
     double turnVal = Controller1.Axis1.position();
     double forwardVal = Controller1.Axis3.position();

@@ -11,7 +11,7 @@ brain Brain = brain();
 // Initializing the Controller
 controller Controller1 = controller();
 
-// Initializing Motors
+// INITALIZING MOTORS
 // assuming intake is the font
 motor LeftFrontMotor = motor(PORT11, ratio6_1, true);
 motor LeftMiddleMotor = motor(PORT12, ratio6_1, true);
@@ -21,13 +21,17 @@ motor RightMiddleMotor = motor(PORT2, ratio6_1, false);
 motor RightBackMotor = motor(PORT3, ratio6_1, false);
 motor IntakeFlywheelMotor = motor(PORT4, ratio6_1, false);
 motor LiftMotor = motor(PORT8, ratio36_1, false);
-inertial Inertial = inertial(PORT5);
+
+// INITALIZING SENSORS
+inertial Inertial = inertial(PORT7);
+
+// INITIALIZING PISTONS
+digital_out LeftPiston = digital_out(Brain.ThreeWirePort.A);
 
 // GLOBAL VARIABLES
-
 // (type specifier needed for all these declarations here)
 // autonomous selection
-int autonSelected = 0;              // default auton
+int autonSelected = 3;              // default auton
 std::string allianceColor = "NONE"; // default alliance color
 
 int rectWidth = 240;        // left-right

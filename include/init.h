@@ -9,7 +9,7 @@ extern vex::brain Brain;
 // Declaring the Controller
 extern vex::controller Controller1;
 
-// Declaring the Drivetrain Motors
+// Declaring Motors
 extern vex::motor LeftFrontMotor;
 extern vex::motor LeftMiddleMotor;
 extern vex::motor LeftBackMotor;
@@ -18,7 +18,12 @@ extern vex::motor RightMiddleMotor;
 extern vex::motor RightBackMotor;
 extern vex::motor IntakeFlywheelMotor;
 extern vex::motor LiftMotor;
+
+// Declaring Sensors
 extern vex::inertial Inertial;
+
+// Declaring Pistons
+extern vex::digital_out LeftPiston; // try with digital_out and if no work do led
 
 // GLOBAL VARIABLES
 

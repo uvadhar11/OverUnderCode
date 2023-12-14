@@ -15,3 +15,4 @@ void auton4();
 // DRIVE PID FUNCTIONS
 void drivePID(int desiredValue, double multiplier);
 void drivePID(int desiredValue, double multiplier, bool intakeWhile);
+void turnPID(int desiredValue, double multiplier);
