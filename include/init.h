@@ -23,7 +23,8 @@ extern vex::motor LiftMotor;
 extern vex::inertial Inertial;
 
 // Declaring Pistons
-extern vex::digital_out LeftPiston; // try with digital_out and if no work do led
+extern vex::led LeftWing;
+extern vex::led RightWing;
 
 // GLOBAL VARIABLES
 

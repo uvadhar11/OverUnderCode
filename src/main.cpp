@@ -21,11 +21,65 @@ competition Competition;
 // define your global instances of motors and other devices here
 bool side = true; // bool for switching front and back. True: intake, False: wedge
 
+// pneumatics stuff
+bool rightWingEnabled = false;
+bool leftWingEnabled = false;
+bool bothWingsEnabled = false;
+
 // degrees calculation function
 double revolutions(double inches)
 {
   return inches * (48 / 60) * 600 * M_PI * 3.25; // inches * motor ticks * gear ratio * pi * wheel inches
   // inches * 300 * (3/7) * M_PI * 4.05;
+}
+
+// pneumatics functions
+void actuateLeftWing()
+{
+  if (leftWingEnabled == false)
+  {
+    LeftWing.off();
+    leftWingEnabled = true;
+    // wait(0.1, sec);
+  }
+  else
+  {
+    LeftWing.on();
+    leftWingEnabled = false;
+    // wait(0.1, sec);
+  }
+}
+
+void actuateRightWing()
+{
+  if (rightWingEnabled == false)
+  {
+    RightWing.off();
+    rightWingEnabled = true;
+    // wait(0.1, sec);
+  }
+  else
+  {
+    RightWing.on();
+    rightWingEnabled = false;
+    // wait(0.1, sec);
+  }
+}
+
+void actuateBothWings()
+{
+  if (bothWingsEnabled == false)
+  {
+    RightWing.off();
+    LeftWing.off();
+    bothWingsEnabled = true;
+  }
+  else
+  {
+    RightWing.on();
+    LeftWing.on();
+    bothWingsEnabled = false;
+  }
 }
 
 /*---------------------------------------------------------------------------*/
@@ -140,11 +194,11 @@ void usercontrol(void)
     }
 
     // INTAKE/FLYWHEEL
-    if (Controller1.ButtonR1.pressing())
+    if (Controller1.ButtonR2.pressing())
     {
       IntakeFlywheelMotor.spin(fwd, 12, volt);
     }
-    else if (Controller1.ButtonR2.pressing())
+    else if (Controller1.ButtonR1.pressing())
     {
       IntakeFlywheelMotor.spin(fwd, -12, volt);
     }
@@ -168,24 +222,68 @@ void usercontrol(void)
     }
 
     // WINGS
-    if (Controller1.ButtonB.pressing())
-    {
-      // both wings
-    }
-    else if (Controller1.ButtonY.pressing())
-    {
-      // right wing
-    }
-    else if (Controller1.ButtonRight.pressing())
-    {
-      // left wing
-    }
+    // if (Controller1.ButtonX.pressing())
+    // {
+    //   // both wings
+    //   if (leftWingEnabled == false) {
+    //     LeftWing.on();
+    //     leftWingEnabled = true;
+    //   } else {
+    //     LeftWing.on();
+    //     leftWingEnabled = false;
+    //   }
+
+    //   //
+
+    // }
+
+    //  WINGS
+    // if (Controller1.ButtonY.pressing())
+    // {
+    //   if (leftWingEnabled == false)
+    //   {
+    //     LeftWing.off();
+    //     leftWingEnabled = true;
+    //     wait(0.1, sec);
+    //   }
+    //   else
+    //   {
+    //     LeftWing.on();
+    //     leftWingEnabled = false;
+    //     wait(0.1, sec);
+    //   }
+    // }
+    Controller1.ButtonY.pressed(actuateLeftWing);
+    Controller1.ButtonA.pressed(actuateRightWing);
+    Controller1.ButtonX.pressed(actuateBothWings);
+
+    // if (Controller1.ButtonA.pressing())
+    // {
+    //   if (rightWingEnabled == false)
+    //   {
+    //     RightWing.off();
+    //     rightWingEnabled = true;
+    //     wait(0.1, sec);
+    //   }
+    //   else
+    //   {
+    //     RightWing.on();
+    //     rightWingEnabled = false;
+    //     wait(0.1, sec);
+    //   }
+    // }
+
+    // if (Controller1.ButtonA.pressing())
+    // {
+    //   // right wing
+    //   RightWing.on();
+    // }
 
     // SWITCH FRONT/BACK BUTTON
-    if (Controller1.ButtonDown.pressing())
-    {
-      // switch front and back
-    }
+    // if (Controller1.ButtonDown.pressing())
+    // {
+    //   // switch front and back
+    // }
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

@@ -15,7 +15,7 @@ void auton1()
     RightBackMotor.spin(forward, 12, volt);
 
     // wait for the robot to ram the triball in the goal
-    wait(2, sec);
+    wait(1.2, sec);
 
     // stop the drivetrain motors
     LeftFrontMotor.stop();

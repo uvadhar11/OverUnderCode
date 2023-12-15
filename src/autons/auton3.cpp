@@ -35,6 +35,15 @@ void auton3()
     // drive forward to get the green out
 
     // then drive forward to touch the elevation bar
+
+    // SPIN FLYWHEEL TO GET ZIP TIE OUT
+    IntakeFlywheelMotor.spin(forward, 12, volt);
+
+    wait(0.3, sec);
+
+    IntakeFlywheelMotor.stop();
+
+    // setting velocity
     LeftFrontMotor.setVelocity(100, pct);
     RightFrontMotor.setVelocity(100, pct);
     LeftMiddleMotor.setVelocity(100, pct);
@@ -43,7 +52,7 @@ void auton3()
     RightBackMotor.setVelocity(100, pct);
 
     // testing stuff
-    turnPID(-45, 1);
+    turnPID(-45, 0.8);
 
     // RightFrontMotor.spinFor(forward, 150, deg, false);
     // RightMiddleMotor.spinFor(forward, 150, deg, false);
@@ -52,12 +61,12 @@ void auton3()
     // drivePID(350, 1);
 
     // fwd little
-    LeftFrontMotor.spinFor(forward, 400, deg, false);
-    RightFrontMotor.spinFor(forward, 400, deg, false);
-    LeftMiddleMotor.spinFor(forward, 400, deg, false);
-    RightMiddleMotor.spinFor(forward, 400, deg, false);
-    LeftBackMotor.spinFor(forward, 400, deg, false);
-    RightBackMotor.spinFor(forward, 400, deg, true);
+    LeftFrontMotor.spinFor(forward, 350, deg, false); // may need to reduce this a bit
+    RightFrontMotor.spinFor(forward, 350, deg, false);
+    LeftMiddleMotor.spinFor(forward, 350, deg, false);
+    RightMiddleMotor.spinFor(forward, 350, deg, false);
+    LeftBackMotor.spinFor(forward, 350, deg, false);
+    RightBackMotor.spinFor(forward, 350, deg, true);
 
     // back a little
     LeftFrontMotor.spinFor(forward, -175, deg, false);
@@ -70,16 +79,26 @@ void auton3()
     // RETRACT PISTON
 
     //
-    turnPID(-85, 1);
+    turnPID(-75, 1); // change angle a bit less cuz turn is wrong. old: -85
 
     wait(0.1, sec);
 
-    LeftFrontMotor.spinFor(forward, 1600, deg, false);
-    RightFrontMotor.spinFor(forward, 1600, deg, false);
-    LeftMiddleMotor.spinFor(forward, 1600, deg, false);
-    RightMiddleMotor.spinFor(forward, 1600, deg, false);
-    LeftBackMotor.spinFor(forward, 1600, deg, false);
-    RightBackMotor.spinFor(forward, 1600, deg, true);
+    LeftFrontMotor.spinFor(forward, 700, deg, false); // old was 1600
+    RightFrontMotor.spinFor(forward, 700, deg, false);
+    LeftMiddleMotor.spinFor(forward, 700, deg, false);
+    RightMiddleMotor.spinFor(forward, 700, deg, false);
+    LeftBackMotor.spinFor(forward, 700, deg, false);
+    RightBackMotor.spinFor(forward, 700, deg, true);
+
+    // trying this stuff
+    wait(0.1, sec);
+
+    LeftFrontMotor.spinFor(forward, 1000, deg, false);
+    RightFrontMotor.spinFor(forward, 1000, deg, false);
+    LeftMiddleMotor.spinFor(forward, 1000, deg, false);
+    RightMiddleMotor.spinFor(forward, 1000, deg, false);
+    LeftBackMotor.spinFor(forward, 1000, deg, false);
+    RightBackMotor.spinFor(forward, 1000, deg, true);
 
     // turnPID(-90, 1);
 
