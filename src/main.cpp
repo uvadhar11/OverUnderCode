@@ -21,7 +21,7 @@ competition Competition;
 // define your global instances of motors and other devices here
 bool side = true; // bool for switching front and back. True: intake, False: wedge
 
-// pneumatics stuff
+// pneumatics variables
 bool rightWingEnabled = false;
 bool leftWingEnabled = false;
 bool bothWingsEnabled = false;
@@ -29,9 +29,30 @@ bool bothWingsEnabled = false;
 // degrees calculation function
 double revolutions(double inches)
 {
-  return inches * (48 / 60) * 600 * M_PI * 3.25; // inches * motor ticks * gear ratio * pi * wheel inches
+  return inches * (48 / 60) * 600 * M_PI * 3.25; // inches * motor ticks * gear ratio * pi * wheel inches <- WRONG
   // inches * 300 * (3/7) * M_PI * 4.05;
+  // try: inches / gear ratio * 2 * pi  * wheel diameter * 600 (for blue motor ticks I think) - seems to be correct maybe
 }
+
+// // rand ai thing
+// double revolutions(double inches, double wheelDiameter, double gearRatio, double ticksPerRevolution)
+// {
+//   double wheelCircumference = M_PI * wheelDiameter;
+//   double wheelRevolutions = inches / wheelCircumference;
+//   double motorRevolutions = wheelRevolutions * gearRatio;
+//   double motorDegrees = motorRevolutions * ticksPerRevolution;
+//   return motorDegrees;
+// }
+
+// another rand ai thing
+// double calculateMotorDegrees(double distanceInInches, double wheelDiameterInInches)
+// {
+//     const double PI = 3.14159265358979323846;
+//     double circumference = PI * wheelDiameterInInches;
+//     double rotations = distanceInInches / circumference;
+//     double degrees = rotations * 360.0;
+//     return degrees;
+// }
 
 // pneumatics functions
 void actuateLeftWing()
@@ -171,7 +192,7 @@ void usercontrol(void)
 
     double turnVal = Controller1.Axis1.position();
     double forwardVal = Controller1.Axis3.position();
-    double turnVolts = (turnVal * 0.12 * speed); // multiplying the -1 so it goes the other way since it was inverted.
+    double turnVolts = (turnVal * 0.12 * speed);
     double forwardVolts = (forwardVal * 0.12 * (1 - (fabs(turnVolts) / 12.0) * turnImportance) * speed);
 
     if (side)
