@@ -306,6 +306,31 @@ void usercontrol(void)
     //   // switch front and back
     // }
 
+    // JAR TEMPLATE ARCADE CODE
+    // void Drive::control_arcade()
+    // {
+    //   // deadband is a function taking the value and the 2nd parameter is the deadzone width
+    //   // calculates lateral movement
+    //   float throttle = deadband(controller(primary).Axis3.value(), 5);
+    //   // calculates turning
+    //   float turn = deadband(controller(primary).Axis1.value(), 5);
+    //   DriveL.spin(fwd, to_volt(throttle + turn), volt);
+    //   DriveR.spin(fwd, to_volt(throttle - turn), volt);
+    // }
+
+    // DEADBAND FUNCTION THAT IS USED ABOVE
+    // deadband looks like a deadzone of argument width and input is the input taken in from the controller
+    // float deadband(float input, float width)
+    // {
+    //   // if the input percentage (absolute value to account for negatives) is inside the width of the deadzone, then return 0 (no affect)
+    //   if (fabs(input) < width)
+    //   {
+    //     return (0);
+    //   }
+    //   // if not in this width then just return the input to be used
+    //   return (input);
+    // }
+
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }
