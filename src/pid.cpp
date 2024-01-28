@@ -503,113 +503,113 @@ void turnPID(int desiredValue, double multiplier)
 // }
 
 // some global variables that are important and stuff
-int starti = 100;
-double settleError;
-int settleTime = 200;     // in ms
-int timeSpentSettled = 0; // in ms
-int timeSpentRunning = 0; // in ms
-int timeout = 2000;       // in ms
+// int starti = 100;
+// double settleError;
+// int settleTime = 200;     // in ms
+// int timeSpentSettled = 0; // in ms
+// int timeSpentRunning = 0; // in ms
+// int timeout = 2000;       // in ms
 
-// good pid (refactor the program later) - make into a task probably and make some of the pid values public like with the public interface and stuff so you can use the error values and stuff to determine when to do things like intake, actuate pistons, etc.
-void goodPID(int desiredValue, double multiplier)
-{
-    // Settings - variables initializations
-    double kP = 0.115;
-    double kI = 0.000000001;
-    double kD = 0.0312;
+// // good pid (refactor the program later) - make into a task probably and make some of the pid values public like with the public interface and stuff so you can use the error values and stuff to determine when to do things like intake, actuate pistons, etc.
+// void goodPID(int desiredValue, double multiplier)
+// {
+//     // Settings - variables initializations
+//     double kP = 0.115;
+//     double kI = 0.000000001;
+//     double kD = 0.0312;
 
-    // Autonomous Settings
-    double error = 0;
-    double prevError = 0;
-    int derivative;
-    double totalError = 0;
+//     // Autonomous Settings
+//     double error = 0;
+//     double prevError = 0;
+//     int derivative;
+//     double totalError = 0;
 
-    // Reset the motor encoder positions
-    LeftFrontMotor.setPosition(0, degrees);
-    LeftMiddleMotor.setPosition(0, degrees);
-    LeftBackMotor.setPosition(0, degrees);
-    RightFrontMotor.setPosition(0, degrees);
-    RightMiddleMotor.setPosition(0, degrees);
-    RightBackMotor.setPosition(0, degrees);
+//     // Reset the motor encoder positions
+//     LeftFrontMotor.setPosition(0, degrees);
+//     LeftMiddleMotor.setPosition(0, degrees);
+//     LeftBackMotor.setPosition(0, degrees);
+//     RightFrontMotor.setPosition(0, degrees);
+//     RightMiddleMotor.setPosition(0, degrees);
+//     RightBackMotor.setPosition(0, degrees);
 
-    while (true)
-    {
-        // CHECKING STOPPING CONDITIONS (you can also do this in the condition of the while loop) -> and then u call a function and use return statements like in jar.
-        if (timeSpentRunning > timeout && timeout != 0)
-        {
-            break;
-        }
-        // if the time spent settled (the time spent inside the error range that considered acceptable to stop the movement in) is greater than the amount of time we have set to spend in this settled position (prolly used to give ample time for bot to come to complete stop), then return that its settled (stop the movement)
-        if (timeSpentSettled > settleTime)
-        {
-            break;
-        }
-        // if none of the above conditions are true, keep running the movement
+//     while (true)
+//     {
+//         // CHECKING STOPPING CONDITIONS (you can also do this in the condition of the while loop) -> and then u call a function and use return statements like in jar.
+//         if (timeSpentRunning > timeout && timeout != 0)
+//         {
+//             break;
+//         }
+//         // if the time spent settled (the time spent inside the error range that considered acceptable to stop the movement in) is greater than the amount of time we have set to spend in this settled position (prolly used to give ample time for bot to come to complete stop), then return that its settled (stop the movement)
+//         if (timeSpentSettled > settleTime)
+//         {
+//             break;
+//         }
+//         // if none of the above conditions are true, keep running the movement
 
-        // Get the position of the motors
-        int leftFrontMotorPosition = LeftFrontMotor.position(degrees);
-        int leftMiddleMotorPosition = LeftMiddleMotor.position(degrees);
-        int leftBackMotorPosition = LeftBackMotor.position(degrees);
-        int rightFrontMotorPosition = RightFrontMotor.position(degrees);
-        int rightMiddleMotorPosition = RightMiddleMotor.position(degrees);
-        int rightBackMotorPosition = RightBackMotor.position(degrees);
+//         // Get the position of the motors
+//         int leftFrontMotorPosition = LeftFrontMotor.position(degrees);
+//         int leftMiddleMotorPosition = LeftMiddleMotor.position(degrees);
+//         int leftBackMotorPosition = LeftBackMotor.position(degrees);
+//         int rightFrontMotorPosition = RightFrontMotor.position(degrees);
+//         int rightMiddleMotorPosition = RightMiddleMotor.position(degrees);
+//         int rightBackMotorPosition = RightBackMotor.position(degrees);
 
-        // Lateral Movement PID/Going forward and back
+//         // Lateral Movement PID/Going forward and back
 
-        // Get the average of the motors
-        int averagePosition = ((leftFrontMotorPosition + leftBackMotorPosition + leftMiddleMotorPosition + rightFrontMotorPosition + rightMiddleMotorPosition + rightBackMotorPosition) / 6);
+//         // Get the average of the motors
+//         int averagePosition = ((leftFrontMotorPosition + leftBackMotorPosition + leftMiddleMotorPosition + rightFrontMotorPosition + rightMiddleMotorPosition + rightBackMotorPosition) / 6);
 
-        // Potential
-        error = desiredValue - averagePosition;
+//         // Potential
+//         error = desiredValue - averagePosition;
 
-        // Derivative
-        derivative = error - prevError;
+//         // Derivative
+//         derivative = error - prevError;
 
-        // Integral
-        // if in range we want to accumulate integral (close to target), then accumulate integral
-        if (fabs(error) < starti)
-        {
-            totalError += error;
-        }
-        // if crossing 0 then set total error to 0 (accumulated integral) - checking the sign change
-        if ((error > 0 && prevError < 0) || (error < 0 && prevError > 0))
-        {
-            totalError = 0;
-        }
+//         // Integral
+//         // if in range we want to accumulate integral (close to target), then accumulate integral
+//         if (fabs(error) < starti)
+//         {
+//             totalError += error;
+//         }
+//         // if crossing 0 then set total error to 0 (accumulated integral) - checking the sign change
+//         if ((error > 0 && prevError < 0) || (error < 0 && prevError > 0))
+//         {
+//             totalError = 0;
+//         }
 
-        // calculate motor power
-        double lateralMotorPower = ((error * kP) + (derivative * kD) + (totalError * kI)) * multiplier;
+//         // calculate motor power
+//         double lateralMotorPower = ((error * kP) + (derivative * kD) + (totalError * kI)) * multiplier;
 
-        // update prev error
-        prevError = error;
+//         // update prev error
+//         prevError = error;
 
-        // UPDATING STOPPING VALUES
-        // if in range acceptable to stop the movement then increment time spent settled
-        if (fabs(error) < settleError)
-        {
-            timeSpentSettled += 10;
-        }
-        // if not in this range, then settled time needs to be 0
-        else
-        {
-            timeSpentSettled = 0;
-        }
+//         // UPDATING STOPPING VALUES
+//         // if in range acceptable to stop the movement then increment time spent settled
+//         if (fabs(error) < settleError)
+//         {
+//             timeSpentSettled += 10;
+//         }
+//         // if not in this range, then settled time needs to be 0
+//         else
+//         {
+//             timeSpentSettled = 0;
+//         }
 
-        timeSpentRunning += 10; // assuming a 10 second delay everytime you call this
+//         timeSpentRunning += 10; // assuming a 10 second delay everytime you call this
 
-        // MOVE THE DRIVE MOTORS - R was rev
-        LeftFrontMotor.spin(fwd, lateralMotorPower, voltageUnits::volt);   //+ turnMotorPower (if turning). L/R for self-correction
-        RightFrontMotor.spin(fwd, lateralMotorPower, voltageUnits::volt);  //- turnMotorPower
-        LeftMiddleMotor.spin(fwd, lateralMotorPower, voltageUnits::volt);  //+ turnMotorPower
-        RightMiddleMotor.spin(fwd, lateralMotorPower, voltageUnits::volt); //- turnMotorPower
-        LeftBackMotor.spin(fwd, lateralMotorPower, voltageUnits::volt);    //+ turnMotorPower
-        RightBackMotor.spin(fwd, lateralMotorPower, voltageUnits::volt);   //- turnMotorPower
-    }
-    // stop the wheels after the while loop is done
-    LeftFrontMotor.stop(hold);
-    RightFrontMotor.stop(hold);
-    LeftMiddleMotor.stop(hold);
-    RightMiddleMotor.stop(hold);
-    LeftBackMotor.stop(hold);
-    RightBackMotor.stop(hold);
-}
+//         // MOVE THE DRIVE MOTORS - R was rev
+//         LeftFrontMotor.spin(fwd, lateralMotorPower, voltageUnits::volt);   //+ turnMotorPower (if turning). L/R for self-correction
+//         RightFrontMotor.spin(fwd, lateralMotorPower, voltageUnits::volt);  //- turnMotorPower
+//         LeftMiddleMotor.spin(fwd, lateralMotorPower, voltageUnits::volt);  //+ turnMotorPower
+//         RightMiddleMotor.spin(fwd, lateralMotorPower, voltageUnits::volt); //- turnMotorPower
+//         LeftBackMotor.spin(fwd, lateralMotorPower, voltageUnits::volt);    //+ turnMotorPower
+//         RightBackMotor.spin(fwd, lateralMotorPower, voltageUnits::volt);   //- turnMotorPower
+//     }
+//     // stop the wheels after the while loop is done
+//     LeftFrontMotor.stop(hold);
+//     RightFrontMotor.stop(hold);
+//     LeftMiddleMotor.stop(hold);
+//     RightMiddleMotor.stop(hold);
+//     LeftBackMotor.stop(hold);
+//     RightBackMotor.stop(hold);
+// }
