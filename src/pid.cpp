@@ -30,7 +30,7 @@ void drivePID(int desiredValue, double multiplier)
     RightFrontMotor.setPosition(0, degrees);
     RightMiddleMotor.setPosition(0, degrees);
     RightBackMotor.setPosition(0, degrees);
-    // double targetGyroPosition = Inertial.yaw(rotationUnits::deg); // get value for self-correction
+    double targetGyroPosition = Inertial.yaw(rotationUnits::deg); // get value for self-correction
 
     Brain.Screen.clearScreen();
 
@@ -54,25 +54,29 @@ void drivePID(int desiredValue, double multiplier)
         // printing values to brain
 
         // for self-correction stuff
-        // int GyroPosition = Inertial.yaw(rotationUnits::deg) - targetGyroPosition;
+        int GyroPosition = Inertial.yaw(rotationUnits::deg) - targetGyroPosition;
 
-        // if (Inertial.yaw(rotationUnits::deg) < targetGyroPosition) {
+        if (Inertial.yaw(rotationUnits::deg) < targetGyroPosition)
+        {
 
-        //   rightValue = abs(GyroPosition) * abs(GyroPosition) / selfCorrect;
+            rightValue = abs(GyroPosition) * abs(GyroPosition) / selfCorrect;
+        }
+        else
+        {
 
-        // } else {
+            rightValue = 0;
+        }
 
-        //   rightValue = 0;
-        // }
+        if (Inertial.yaw(rotationUnits::deg) > targetGyroPosition)
+        {
 
-        // if (Inertial.yaw(rotationUnits::deg) > targetGyroPosition) {
+            leftValue = abs(GyroPosition) * abs(GyroPosition) / selfCorrect;
+        }
+        else
+        {
 
-        //   leftValue = abs(GyroPosition) * abs(GyroPosition) / selfCorrect;
-
-        // } else {
-
-        //   leftValue = 0;
-        // }
+            leftValue = 0;
+        }
 
         // Lateral Movement PID/Going forward and back
 
@@ -184,7 +188,7 @@ void drivePID(int desiredValue, double multiplier, bool intakeWhile)
     RightFrontMotor.setPosition(0, degrees);
     RightMiddleMotor.setPosition(0, degrees);
     RightBackMotor.setPosition(0, degrees);
-    // double targetGyroPosition = Inertial.yaw(rotationUnits::deg); // get value for self correction
+    double targetGyroPosition = Inertial.yaw(rotationUnits::deg); // get value for self correction
 
     Brain.Screen.clearScreen();
 
@@ -208,25 +212,29 @@ void drivePID(int desiredValue, double multiplier, bool intakeWhile)
         // printing values to brain
 
         // for self-correction stuff
-        // int GyroPosition = Inertial.yaw(rotationUnits::deg) - targetGyroPosition;
+        int GyroPosition = Inertial.yaw(rotationUnits::deg) - targetGyroPosition;
 
-        // if (Inertial.yaw(rotationUnits::deg) < targetGyroPosition) {
+        if (Inertial.yaw(rotationUnits::deg) < targetGyroPosition)
+        {
 
-        //   rightValue = abs(GyroPosition) * abs(GyroPosition) / selfCorrect;
+            rightValue = abs(GyroPosition) * abs(GyroPosition) / selfCorrect;
+        }
+        else
+        {
 
-        // } else {
+            rightValue = 0;
+        }
 
-        //   rightValue = 0;
-        // }
+        if (Inertial.yaw(rotationUnits::deg) > targetGyroPosition)
+        {
 
-        // if (Inertial.yaw(rotationUnits::deg) > targetGyroPosition) {
+            leftValue = abs(GyroPosition) * abs(GyroPosition) / selfCorrect;
+        }
+        else
+        {
 
-        //   leftValue = abs(GyroPosition) * abs(GyroPosition) / selfCorrect;
-
-        // } else {
-
-        //   leftValue = 0;
-        // }
+            leftValue = 0;
+        }
 
         // Lateral Movement PID/Going forward and back
 
