@@ -16,3 +16,4 @@ void auton4();
 void drivePID(int desiredValue, double multiplier);
 void drivePID(int desiredValue, double multiplier, bool intakeWhile);
 void turnPID(int desiredValue, double multiplier);
+void goodPID(int desiredValue, double multiplier);

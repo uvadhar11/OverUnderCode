@@ -38,6 +38,7 @@ void auton1()
     turnPID(45, 1);
 
     // mid over
+    // testing date before comp 2.2.24 - seems like this part is not needed anymore as the robot seems to get in the optimal placement before this point. test with middler barrier because it might be needed, just want to mkae sure the wedge and stuff doesn't get stuck.
     LeftFrontMotor.spin(reverse, 12, volt);
     RightFrontMotor.spin(reverse, 12, volt);
     LeftMiddleMotor.spin(reverse, 12, volt);
