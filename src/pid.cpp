@@ -639,25 +639,7 @@ void goodPID(int desiredValue, double multiplier)
     Brain.Screen.print("DRIVE MOVEMENT DONE");
 }
 
-// moving the angle into the range of -180 to 180 degrees
-// need to do this stuff cuz its crucial for angle wrapping for inertial
-float reduce_negative_180_to_180(float angle)
-{
-    while (!(angle >= -180 && angle < 180))
-    {
-        if (angle < -180)
-        {
-            angle += 360;
-        }
-        if (angle >= 180)
-        {
-            angle -= 360;
-        }
-    }
-    return (angle);
-}
-
-void goodTurnPID(int desiredValue, double multiplier)
+void goodTurnPID(int desiredValue, double multiplier, int param_settleTime, int param_timeout)
 {
     // Settings - variables initializations
     double kP = 0.13; // 0.115
@@ -671,20 +653,20 @@ void goodTurnPID(int desiredValue, double multiplier)
     double totalError = 0;
 
     // Reset the motor encoder positions
-    LeftFrontMotor.setPosition(0, degrees);
-    LeftMiddleMotor.setPosition(0, degrees);
-    LeftBackMotor.setPosition(0, degrees);
-    RightFrontMotor.setPosition(0, degrees);
-    RightMiddleMotor.setPosition(0, degrees);
-    RightBackMotor.setPosition(0, degrees);
+    // LeftFrontMotor.setPosition(0, degrees);
+    // LeftMiddleMotor.setPosition(0, degrees);
+    // LeftBackMotor.setPosition(0, degrees);
+    // RightFrontMotor.setPosition(0, degrees);
+    // RightMiddleMotor.setPosition(0, degrees);
+    // RightBackMotor.setPosition(0, degrees);
 
     // some global variables that are important and stuff
-    int starti = 100;         // range from target to start accumulating integral (it will start accumulating when error is less than this value)
-    double settleError = 5;   // doing 5 for fun
-    int settleTime = 0;       // in ms
-    int timeSpentSettled = 0; // in ms
-    int timeSpentRunning = 0; // in ms
-    int timeout = 2000;       // in ms
+    int starti = 100;                  // range from target to start accumulating integral (it will start accumulating when error is less than this value)
+    double settleError = 5;            // doing 5 for fun
+    int settleTime = param_settleTime; // in ms // 0
+    int timeSpentSettled = 0;          // in ms
+    int timeSpentRunning = 0;          // in ms
+    int timeout = param_timeout;       // in ms // 2000
 
     while (true)
     {
@@ -704,20 +686,21 @@ void goodTurnPID(int desiredValue, double multiplier)
         // if none of the above conditions are true, keep running the movement
 
         // Get the position of the motors
-        int leftFrontMotorPosition = LeftFrontMotor.position(degrees);
-        int leftMiddleMotorPosition = LeftMiddleMotor.position(degrees);
-        int leftBackMotorPosition = LeftBackMotor.position(degrees);
-        int rightFrontMotorPosition = RightFrontMotor.position(degrees);
-        int rightMiddleMotorPosition = RightMiddleMotor.position(degrees);
-        int rightBackMotorPosition = RightBackMotor.position(degrees);
+        // int leftFrontMotorPosition = LeftFrontMotor.position(degrees);
+        // int leftMiddleMotorPosition = LeftMiddleMotor.position(degrees);
+        // int leftBackMotorPosition = LeftBackMotor.position(degrees);
+        // int rightFrontMotorPosition = RightFrontMotor.position(degrees);
+        // int rightMiddleMotorPosition = RightMiddleMotor.position(degrees);
+        // int rightBackMotorPosition = RightBackMotor.position(degrees);
 
         // Lateral Movement PID/Going forward and back
 
         // Get the average of the motors
-        int averagePosition = ((leftFrontMotorPosition + leftBackMotorPosition + leftMiddleMotorPosition + rightFrontMotorPosition + rightMiddleMotorPosition + rightBackMotorPosition) / 6);
+        int averagePosition = Inertial.heading();
+        // ((leftFrontMotorPosition + leftBackMotorPosition + leftMiddleMotorPosition + rightFrontMotorPosition + rightMiddleMotorPosition + rightBackMotorPosition) / 6);
 
         // Potential
-        error = desiredValue - averagePosition;
+        error = reduce_negative_180_to_180(desiredValue - averagePosition);
 
         // Derivative
         derivative = error - prevError;

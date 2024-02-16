@@ -17,10 +17,8 @@ void drivePID(int desiredValue, double multiplier);
 void drivePID(int desiredValue, double multiplier, bool intakeWhile);
 void turnPID(int desiredValue, double multiplier);
 void goodPID(int desiredValue, double multiplier);
-void goodTurnPID(int desiredValue, double multiplier);
-
-// reducing angle to -180 to 180
-float reduce_negative_180_to_180(float angle);
+// void goodTurnPID(int desiredValue, double multiplier);
+void goodTurnPID(int desiredValue, double multiplier, int param_settleTime, int param_timeout);
 
 // PID CLASS FUNCTIONS
 // the point of having this in a class allows us to make a PID object for each movement. PID class is used for computations and checking settled ONLY.
@@ -64,3 +62,28 @@ public:
     // checks if pid loop has settled
     bool is_PID_settled();
 };
+
+// DRIVE CLASS
+class Drive
+{
+private:
+    float wheel_diameter; // diameter of the wheel
+public:
+    // INSTANCE VARIABLES
+    float desired_heading; // Desired heading carries over the angle from one movement to another. That way, if the robot doesn't finish a turn movement, it will still drive at the angle that was specified in the turn movement.
+};
+
+// HELPER FUNCTIONS
+
+// reducing angle to -180 to 180
+float reduce_negative_180_to_180(float angle);
+
+// moving the angle into the range of 0-360 degrees
+float reduce_0_to_360(float angle);
+
+// getting the absolute heading for the inertial
+// the 1 at the end is for the gyro scale.
+float get_absolute_heading()
+{
+    return (reduce_0_to_360(Inertial.rotation() * 360.0 / 1));
+}
