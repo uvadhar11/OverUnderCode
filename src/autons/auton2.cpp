@@ -69,39 +69,15 @@ void auton2()
     // idk if the heading will change but we will need to try that.
 
     // code
-    LeftFrontMotor.spin(reverse, 12, volt);
-    RightFrontMotor.spin(reverse, 12, volt);
-    LeftMiddleMotor.spin(reverse, 12, volt);
-    RightMiddleMotor.spin(reverse, 12, volt);
-    LeftBackMotor.spin(reverse, 10, volt);
-    RightBackMotor.spin(reverse, 12, volt);
+    // LeftFrontMotor.spin(reverse, 12, volt);
+    // RightFrontMotor.spin(reverse, 12, volt);
+    // LeftMiddleMotor.spin(reverse, 12, volt);
+    // RightMiddleMotor.spin(reverse, 12, volt);
+    // LeftBackMotor.spin(reverse, 10, volt);
+    // RightBackMotor.spin(reverse, 12, volt);
 
-    // wait for the robot to ram the triball in the goal
-    wait(0.7, sec); // 1.l2 for ram
-
-    // wing
-    // RightWing.off();
-
-    // wait(0.33, sec); // 1.l2 for ram
-
-    // stop the drivetrain motors
-    LeftFrontMotor.stop();
-    RightFrontMotor.stop();
-    LeftMiddleMotor.stop();
-    RightMiddleMotor.stop();
-    LeftBackMotor.stop();
-    RightBackMotor.stop();
-
-    // other
-    LeftFrontMotor.spin(forward, 12, volt);
-    RightFrontMotor.spin(forward, 12, volt);
-    LeftMiddleMotor.spin(forward, 12, volt);
-    RightMiddleMotor.spin(forward, 12, volt);
-    LeftBackMotor.spin(forward, 10, volt);
-    RightBackMotor.spin(forward, 12, volt);
-
-    // wait for the robot to ram the triball in the goal
-    wait(0.3, sec); // 1.l2 for ram
+    // // wait for the robot to ram the triball in the goal
+    // wait(0.7, sec); // 1.l2 for ram
 
     // wing
     // RightWing.off();
@@ -109,10 +85,62 @@ void auton2()
     // wait(0.33, sec); // 1.l2 for ram
 
     // stop the drivetrain motors
-    LeftFrontMotor.stop();
-    RightFrontMotor.stop();
-    LeftMiddleMotor.stop();
-    RightMiddleMotor.stop();
-    LeftBackMotor.stop();
-    RightBackMotor.stop();
+    // LeftFrontMotor.stop();
+    // RightFrontMotor.stop();
+    // LeftMiddleMotor.stop();
+    // RightMiddleMotor.stop();
+    // LeftBackMotor.stop();
+    // RightBackMotor.stop();
+
+    // // other
+    // LeftFrontMotor.spin(forward, 12, volt);
+    // RightFrontMotor.spin(forward, 12, volt);
+    // LeftMiddleMotor.spin(forward, 12, volt);
+    // RightMiddleMotor.spin(forward, 12, volt);
+    // LeftBackMotor.spin(forward, 10, volt);
+    // RightBackMotor.spin(forward, 12, volt);
+
+    // // wait for the robot to ram the triball in the goal
+    // wait(0.3, sec); // 1.l2 for ram
+
+    // // wing
+    // // RightWing.off();
+
+    // // wait(0.33, sec); // 1.l2 for ram
+
+    // // stop the drivetrain motors
+    // LeftFrontMotor.stop();
+    // RightFrontMotor.stop();
+    // LeftMiddleMotor.stop();
+    // RightMiddleMotor.stop();
+    // LeftBackMotor.stop();
+    // RightBackMotor.stop();
+
+    // lift down
+    LiftMotor.spinFor(reverse, 250, degrees);
+
+    // spool up intake motor
+    IntakeFlywheelMotor.spin(fwd, 12, volt);
+    wait(1, sec);
+    IntakeFlywheelMotor.stop();
+
+    // drive slightly forward
+    goodPID(100, 1, 100, 2000);
+
+    // drive back
+    goodPID(-1500, 1, 100, 2000);
+
+    // turn parallel with matchload bar
+    goodTurnPID(-45, 1, 100, 2000);
+
+    // drive to take zone triball out
+    goodPID(-400, 1, 100, 2000);
+
+    // wing out
+    LeftWing.off();
+
+    wait(0.2, sec);
+
+    // turn slightly
+    goodTurnPID(-90, 1, 100, 2000);
 }

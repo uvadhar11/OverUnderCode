@@ -128,7 +128,7 @@ void pre_auton(void)
 
   Brain.Screen.pressed(autonScreenSelector);
 
-  // autonSelected = 4;
+  autonSelected = 1;
 }
 
 /*--------------------------------------------------------------------------*/

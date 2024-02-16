@@ -521,7 +521,7 @@ void turnPID(int desiredValue, double multiplier)
 // int timeout = 2000;       // in ms
 
 // // good pid (refactor the program later) - make into a task probably and make some of the pid values public like with the public interface and stuff so you can use the error values and stuff to determine when to do things like intake, actuate pistons, etc.
-void goodPID(int desiredValue, double multiplier)
+void goodPID(int desiredValue, double multiplier, int param_settleTime, int param_timeout)
 {
     // Settings - variables initializations
     double kP = 0.13; // 0.115
@@ -543,12 +543,12 @@ void goodPID(int desiredValue, double multiplier)
     RightBackMotor.setPosition(0, degrees);
 
     // some global variables that are important and stuff
-    int starti = 100;         // range from target to start accumulating integral (it will start accumulating when error is less than this value)
-    double settleError = 5;   // doing 5 for fun
-    int settleTime = 0;       // in ms
-    int timeSpentSettled = 0; // in ms
-    int timeSpentRunning = 0; // in ms
-    int timeout = 2000;       // in ms
+    int starti = 100;                  // range from target to start accumulating integral (it will start accumulating when error is less than this value)
+    double settleError = 5;            // doing 5 for fun
+    int settleTime = param_settleTime; // in ms // 0
+    int timeSpentSettled = 0;          // in ms
+    int timeSpentRunning = 0;          // in ms
+    int timeout = param_timeout;       // in ms // 2000
 
     while (true)
     {
@@ -738,12 +738,12 @@ void goodTurnPID(int desiredValue, double multiplier, int param_settleTime, int 
         timeSpentRunning += 10; // assuming a 10 second delay everytime you call this
 
         // MOVE THE DRIVE MOTORS - R was rev
-        LeftFrontMotor.spin(fwd, lateralMotorPower, voltageUnits::volt);   //+ turnMotorPower (if turning). L/R for self-correction
-        RightFrontMotor.spin(fwd, lateralMotorPower, voltageUnits::volt);  //- turnMotorPower
-        LeftMiddleMotor.spin(fwd, lateralMotorPower, voltageUnits::volt);  //+ turnMotorPower
-        RightMiddleMotor.spin(fwd, lateralMotorPower, voltageUnits::volt); //- turnMotorPower
-        LeftBackMotor.spin(fwd, lateralMotorPower, voltageUnits::volt);    //+ turnMotorPower
-        RightBackMotor.spin(fwd, lateralMotorPower, voltageUnits::volt);   //- turnMotorPower
+        LeftFrontMotor.spin(fwd, lateralMotorPower, voltageUnits::volt);    //+ turnMotorPower (if turning). L/R for self-correction
+        RightFrontMotor.spin(fwd, -lateralMotorPower, voltageUnits::volt);  //- turnMotorPower
+        LeftMiddleMotor.spin(fwd, lateralMotorPower, voltageUnits::volt);   //+ turnMotorPower
+        RightMiddleMotor.spin(fwd, -lateralMotorPower, voltageUnits::volt); //- turnMotorPower
+        LeftBackMotor.spin(fwd, lateralMotorPower, voltageUnits::volt);     //+ turnMotorPower
+        RightBackMotor.spin(fwd, -lateralMotorPower, voltageUnits::volt);   //- turnMotorPower
 
         vex::task::sleep(10); // delay for 10ms
     }

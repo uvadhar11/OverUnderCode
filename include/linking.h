@@ -16,7 +16,8 @@ void auton4();
 void drivePID(int desiredValue, double multiplier);
 void drivePID(int desiredValue, double multiplier, bool intakeWhile);
 void turnPID(int desiredValue, double multiplier);
-void goodPID(int desiredValue, double multiplier);
+// void goodPID(int desiredValue, double multiplier);
+void goodPID(int desiredValue, double multiplier, int param_settleTime, int param_timeout);
 // void goodTurnPID(int desiredValue, double multiplier);
 void goodTurnPID(int desiredValue, double multiplier, int param_settleTime, int param_timeout);
 
@@ -83,7 +84,4 @@ float reduce_0_to_360(float angle);
 
 // getting the absolute heading for the inertial
 // the 1 at the end is for the gyro scale.
-float get_absolute_heading()
-{
-    return (reduce_0_to_360(Inertial.rotation() * 360.0 / 1));
-}
+float get_absolute_heading();

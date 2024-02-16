@@ -111,7 +111,7 @@ void auton3()
     RightWing.off();
 
     // drive into middle triball
-    goodPID(-2100, 1);
+    goodPID(-2100, 1, 0, 2000);
 
     // turn to middle barrier
     turnPID(45, 1);
