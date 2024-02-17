@@ -48,3 +48,17 @@ float get_absolute_heading()
 {
     return (reduce_0_to_360(Inertial.rotation() * 360.0 / 1));
 }
+
+// clamp is just clamping the value inside a certain range
+float clamp(float input, float min, float max)
+{
+    if (input > max)
+    {
+        return (max);
+    }
+    if (input < min)
+    {
+        return (min);
+    }
+    return (input);
+}
