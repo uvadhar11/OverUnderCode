@@ -662,7 +662,7 @@ void goodTurnPID(int desiredValue, double multiplier, int param_settleTime, int 
 
     // some global variables that are important and stuff
     int starti = 100;                  // range from target to start accumulating integral (it will start accumulating when error is less than this value)
-    double settleError = 5;            // doing 5 for fun
+    double settleError = 1;            // doing 5 for fun
     int settleTime = param_settleTime; // in ms // 0
     int timeSpentSettled = 0;          // in ms
     int timeSpentRunning = 0;          // in ms
