@@ -6,6 +6,9 @@
 using namespace vex;
 using namespace std;
 
+// DRIVETRAIN CONSTRUCTOR
+Drive::Drive(){};
+
 // FOR DRIVETRAIN MOVEMENTS
 
 // calculate left position of the drive (in inches)

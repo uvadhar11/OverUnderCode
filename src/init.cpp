@@ -1,6 +1,7 @@
 // VARIABLE DEFINITIONS FOR THE GLOBAL VARIABLES
 #include "vex.h"
 #include "init.h"
+#include "linking.h"
 #include <string> // include the string library
 
 using namespace vex;
@@ -10,6 +11,9 @@ brain Brain = brain();
 
 // Initializing the Controller
 controller Controller1 = controller();
+
+// INITALIZING DRIVE
+Drive chassis = Drive();
 
 // INITALIZING MOTORS
 // assuming intake is the font

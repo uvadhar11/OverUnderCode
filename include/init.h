@@ -2,12 +2,17 @@
 // HEADER FILES FOR THE GLOBAL VARIABLES
 using namespace vex;
 #include <string>
+#include "vex.h"
+#include "linking.h"
 
 // Declaring the Brain
 extern vex::brain Brain;
 
 // Declaring the Controller
 extern vex::controller Controller1;
+
+// Declaring the Drive
+extern Drive chassis;
 
 // Declaring Motors
 extern vex::motor LeftFrontMotor;
@@ -33,7 +38,7 @@ extern int autonSelected;         // can set to a default auton if necessary
 extern std::string allianceColor; // track alliance color
 
 // defines the struct for use later
-extern struct autonRects
+struct autonRects
 {
     int xCoordinate;
     int yCoordinate;
@@ -52,10 +57,7 @@ extern autonRects auton3Rect;
 extern autonRects auton4Rect;
 
 // alliance color selection
-extern int colorWidth;  // left-right
-extern int colorLength; // up-down
-
-extern struct colorRects
+struct colorRects
 {
     int xCoordinate;
     int yCoordinate;

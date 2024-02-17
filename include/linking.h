@@ -83,10 +83,10 @@ public:
 
     // TURNING PID
     float max_turn_voltage = 12;
-    float turn_kp = 0.13;
+    float turn_kp = 0.1;
     float turn_ki = 0.0;
-    float turn_kd = 0.3;
-    float turn_starti = 2;
+    float turn_kd = 0.4;
+    float turn_starti = 0.01;
     float turn_settle_error = 0.5; // of an angle
     float turn_settle_time = 200;  // ms
     float turn_timeout = 2000;     // ms
@@ -108,6 +108,9 @@ public:
     float heading_ki = 0.0;
     float heading_kd = 0.3;
     float heading_starti = 2.27;
+
+    // DRIVE CONSTRUCTOR - blank for now until I have time to refactor everything - devices and stuff should go in here instead of setting defaults, etc.
+    Drive();
 
     // get left position of drive in inches
     float get_left_position_in();
