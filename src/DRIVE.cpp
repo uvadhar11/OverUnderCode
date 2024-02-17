@@ -15,13 +15,13 @@ float Drive::get_left_position_in()
 }
 
 // calculate right position of the drive (in inches)
-float Drive::get_left_position_in()
+float Drive::get_right_position_in()
 {
     return ((RightFrontMotor.position(deg) + RightMiddleMotor.position(deg) + RightBackMotor.position(deg)) * drive_in_to_deg_ratio);
 }
 
 // drive with voltage
-void drive_with_voltage(float left_voltage, float right_voltage)
+void Drive::drive_with_voltage(float left_voltage, float right_voltage)
 {
     // set the voltage of the left motors
     LeftFrontMotor.spin(fwd, left_voltage, volt);
@@ -36,7 +36,7 @@ void drive_with_voltage(float left_voltage, float right_voltage)
 
 // stop left drive motors - accepts coast, brake, or hold
 // ex: stop_left_drive(vex::brakeType::hold)
-void stop_left_drive(vex::brakeType brakeType)
+void Drive::stop_left_drive(vex::brakeType brakeType)
 {
     LeftFrontMotor.stop(brakeType);
     LeftMiddleMotor.stop(brakeType);
@@ -45,7 +45,7 @@ void stop_left_drive(vex::brakeType brakeType)
 
 // stop right drive motors - accepts coast, brake, or hold
 // ex. stop_right_drive(vex::brakeType::hold)
-void stop_right_drive(vex::brakeType brakeType)
+void Drive::stop_right_drive(vex::brakeType brakeType)
 {
     RightFrontMotor.stop(brakeType);
     RightMiddleMotor.stop(brakeType);

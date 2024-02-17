@@ -54,7 +54,7 @@ public:
     // PID(float error, float settle_time, float timeout);
 
     // for movements with only heading pid
-    PID::PID(float error, float kp, float ki, float kd, float starti){};
+    PID::PID(float error, float kp, float ki, float kd, float starti);
 
     // METHODS
     // computes the output of the pid loop
@@ -69,7 +69,7 @@ class Drive
 {
 private:
     // diameter of the drive wheels
-    float wheel_diameter;
+    float wheel_diameter = 3.25;
 
     // ratio of the drive wheels - input gear / output gear or motor gear/wheel gear. If direct, its 1. Ex. 48/60 = 0.8
     float wheel_ratio = 0.8;
@@ -82,32 +82,32 @@ public:
     float desired_heading; // Desired heading carries over the angle from one movement to another. That way, if the robot doesn't finish a turn movement, it will still drive at the angle that was specified in the turn movement.
 
     // TURNING PID
-    float max_turn_voltage;
-    float turn_kp;
-    float turn_ki;
-    float turn_kd;
-    float turn_starti;
-    float turn_settle_error;
-    float turn_settle_time;
-    float turn_timeout;
+    float max_turn_voltage = 12;
+    float turn_kp = 0.13;
+    float turn_ki = 0.0;
+    float turn_kd = 0.3;
+    float turn_starti = 2;
+    float turn_settle_error = 0.5; // of an angle
+    float turn_settle_time = 200;  // ms
+    float turn_timeout = 2000;     // ms
 
     // DRIVING PID
-    float drive_max_voltage;
-    float drive_kp;
-    float drive_ki;
-    float drive_kd;
-    float drive_starti;
-    float drive_settle_error;
-    float drive_settle_time;
-    float drive_timeout;
+    float drive_max_voltage = 12;
+    float drive_kp = 0.13;
+    float drive_ki = 0.0;
+    float drive_kd = 0.3;
+    float drive_starti = 2.27;       // (inches) or 100 degrees
+    float drive_settle_error = 0.11; // (inches) or 5 degrees
+    float drive_settle_time = 200;   // ms
+    float drive_timeout = 2000;      // ms
 
     // HEADING PID (for drive correction)
     // NOTE: we only want the heading pid to end when the drive pid ends, so we don't need timeout, settle time, and settle error for heading pid.
-    float heading_max_voltage;
-    float heading_kp;
-    float heading_ki;
-    float heading_kd;
-    float heading_starti;
+    float heading_max_voltage = 6;
+    float heading_kp = 0.13;
+    float heading_ki = 0.0;
+    float heading_kd = 0.3;
+    float heading_starti = 2.27;
 
     // get left position of drive in inches
     float get_left_position_in();
