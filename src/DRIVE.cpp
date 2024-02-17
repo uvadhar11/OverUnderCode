@@ -52,15 +52,22 @@ void stop_right_drive(vex::brakeType brakeType)
     RightBackMotor.stop(brakeType);
 }
 
-// turn to angle method with PID
-void Drive::turn_to_angle(float desired_angle, float max_voltage, float settle_time, float timeout)
+// less custom turn to angle method with PID
+void Drive::turn_to_angle(float desired_angle, float turn_max_voltage, float turn_settle_time, float turn_timeout)
+{
+    // call the fully custom turn to angle method
+    turn_to_angle(desired_angle, turn_max_voltage, turn_settle_time, this->turn_settle_error, turn_timeout, this->turn_kp, this->turn_ki, this->turn_kd, this->turn_starti);
+}
+
+// fully custom turn to angle method with PID
+void Drive::turn_to_angle(float desired_angle, float turn_max_voltage, float turn_settle_time, float turn_settle_error, float turn_timeout, float turn_kp, float turn_ki, float turn_kd, float turn_starti)
 {
     // set the desired angle.
     // Desired heading carries over the angle from one movement to another. That way, if the robot doesn't finish a turn movement, it will still drive at the angle that was specified in the turn movement. THIS IS AN INSTANCE VARIABLE IN DRIVE CLASS.
     desired_heading = desired_angle;
 
     // create a PID instance for this turn movement
-    PID turnPID(reduce_negative_180_to_180(desired_angle - get_absolute_heading()), settle_time, timeout);
+    PID turnPID(reduce_negative_180_to_180(desired_angle - get_absolute_heading()), turn_kp, turn_ki, turn_kd, turn_starti, turn_settle_error, turn_settle_time, turn_timeout);
 
     // create the pid while loop with is settled as the condition
     while (turnPID.is_PID_settled() == false)
@@ -72,7 +79,7 @@ void Drive::turn_to_angle(float desired_angle, float max_voltage, float settle_t
         float output = turnPID.compute_PID_output(error);
 
         // clamp the output to the max power (volts)
-        output = clamp(output, max_voltage, -max_voltage);
+        output = clamp(output, turn_max_voltage, -turn_max_voltage);
 
         // set the voltage of the motors
         drive_with_voltage(output, -output);
@@ -83,17 +90,24 @@ void Drive::turn_to_angle(float desired_angle, float max_voltage, float settle_t
     stop_right_drive(vex::brakeType::hold);
 }
 
-// drive distance
-void Drive::drive_distance(float distance, float heading, float max_voltage, float settle_time, float timeout)
+// less custom drive distance
+void Drive::drive_distance(float distance, float heading, float drive_max_voltage, float heading_max_voltage, float drive_settle_time, float drive_timeout)
+{
+    // call the fully custom drive distance method
+    drive_distance(distance, heading, drive_max_voltage, heading_max_voltage, drive_settle_time, this->drive_settle_error, drive_timeout, this->drive_kp, this->drive_ki, this->drive_kd, this->drive_starti, this->heading_kp, this->heading_ki, this->heading_kd, this->heading_starti);
+};
+
+// fully custom drive distance
+void Drive::drive_distance(float distance, float heading, float drive_max_voltage, float heading_max_voltage, float drive_settle_time, float drive_settle_error, float drive_timeout, float drive_kp, float drive_ki, float drive_kd, float drive_starti, float heading_kp, float heading_ki, float heading_kd, float heading_starti)
 {
     // set desired heading to the heading we want to be at for the movement
     desired_heading = heading;
 
     // make drive pid instance
-    PID drivePID(distance, settle_time, timeout);
+    PID drivePID(distance, drive_kp, drive_ki, drive_kd, drive_starti, drive_settle_error, drive_settle_time, drive_timeout);
 
-    // make heading pid instance
-    PID headingPID(heading, settle_time, timeout);
+    // make heading pid instance - we are ending this movement based on the drive pid settling, so we don't need a timeout, settle time, or settle error for the heading pid
+    PID headingPID(heading, heading_kp, heading_ki, heading_kd, heading_starti);
 
     // store the start average position of the robot instead of resetting the drive function to 0 each time we write the function and then we determine the error relative to that value.
     float start_average_position = (get_left_position_in() + get_right_position_in()) / 2.0;
@@ -122,10 +136,10 @@ void Drive::drive_distance(float distance, float heading, float max_voltage, flo
 
         // CLAMPING OUTPUT
         // clamp the drive output to the max power (volts)
-        drive_output = clamp(drive_output, max_voltage, -max_voltage);
+        drive_output = clamp(drive_output, drive_max_voltage, -drive_max_voltage);
 
         // clamp the heading output to the max power (volts)
-        heading_output = clamp(heading_output, max_voltage, -max_voltage);
+        heading_output = clamp(heading_output, heading_max_voltage, -heading_max_voltage);
 
         // DRIVE MOTORS
         drive_with_voltage(drive_output + heading_output, drive_output - heading_output);

@@ -14,11 +14,14 @@ using namespace std;
 // for fully custom movement
 PID::PID(float error, float kp, float ki, float kd, float starti, float settle_error, float settle_time, float timeout) : error(error), kp(kp), ki(ki), kd(kd), starti(starti), settle_error(settle_error), settle_time(settle_time), timeout(timeout){};
 
-// for movements without custom tuning constants
-PID::PID(float error, float starti, float settle_error, float settle_time, float timeout) : error(error), starti(starti), settle_error(settle_error), settle_time(settle_time), timeout(timeout){};
+// // for movements without custom tuning constants
+// PID::PID(float error, float starti, float settle_error, float settle_time, float timeout) : error(error), starti(starti), settle_error(settle_error), settle_time(settle_time), timeout(timeout){};
 
-// for base custom movements
-PID::PID(float error, float settle_time, float timeout) : error(error), settle_time(settle_time), timeout(timeout){};
+// // for base custom movements
+// PID::PID(float error, float settle_time, float timeout) : error(error), settle_time(settle_time), timeout(timeout){};
+
+// for heading pid movements
+PID::PID(float error, float kp, float ki, float kd, float starti) : error(error), kp(kp), ki(ki), kd(kd), starti(starti){};
 
 // METHODS FOR PID CLASS
 float PID::compute_PID_output(float error)
