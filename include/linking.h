@@ -54,7 +54,7 @@ public:
     // PID(float error, float settle_time, float timeout);
 
     // for movements with only heading pid
-    PID::PID(float error, float kp, float ki, float kd, float starti);
+    PID(float error, float kp, float ki, float kd, float starti);
 
     // METHODS
     // computes the output of the pid loop
