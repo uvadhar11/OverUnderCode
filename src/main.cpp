@@ -128,7 +128,7 @@ void pre_auton(void)
 
   Brain.Screen.pressed(autonScreenSelector);
 
-  autonSelected = 1;
+  autonSelected = 2;
 }
 
 /*--------------------------------------------------------------------------*/
@@ -242,6 +242,16 @@ void usercontrol(void)
     else
     {
       LiftMotor.stop();
+    }
+
+    // KICKER
+    if (Controller1.ButtonLeft.pressing())
+    {
+      KickerMotor.spin(fwd, 12, volt);
+    }
+    else
+    {
+      KickerMotor.stop();
     }
 
     // WINGS
