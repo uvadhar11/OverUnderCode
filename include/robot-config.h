@@ -1,6 +1,10 @@
 using namespace vex;
 
+// Initalizing the brain
 extern brain Brain;
+
+// Initializing the controller
+extern controller Controller1;
 
 // VEXcode devices
 // Declaring Motors
@@ -16,6 +20,10 @@ extern vex::motor KickerMotor;
 
 // Declaring Sensors
 extern vex::inertial Inertial;
+
+// Declaring Pistons
+extern vex::led LeftWing;
+extern vex::led RightWing;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

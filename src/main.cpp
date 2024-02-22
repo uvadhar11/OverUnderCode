@@ -12,7 +12,7 @@ competition Competition;
 /*  you don't have to. Ensure that your motors are reversed properly. For    */
 /*  the drive, spinning all motors forward should drive the robot forward.   */
 /*---------------------------------------------------------------------------*/
-// ADD IN ROBOT CONFIG
+// NOTE: MUST ADD IN ROBOT CONFIG
 
 /*---------------------------------------------------------------------------*/
 /*                             JAR-Template Config                           */
@@ -109,19 +109,19 @@ void pre_auton(void)
   while (auto_started == false)
   {                             // Changing the names below will only change their names on the
     Brain.Screen.clearScreen(); // brain screen for auton selection.
-    Brain.Screen.setFont(mono60);
-    Brain.Screen.setPenWidth(2);
+    // Brain.Screen.setFont(mono60);
+    // Brain.Screen.setPenWidth(1.5);
 
     switch (current_auton_selection)
     { // Tap the brain screen to cycle through autons.
     case 0:
-      Brain.Screen.printAt(50, 50, "Drive Test");
+      Brain.Screen.printAt(50, 50, "NO AUTON");
       break;
     case 1:
       Brain.Screen.printAt(50, 50, "Drive Test");
       break;
     case 2:
-      Brain.Screen.printAt(50, 50, "Turn Test");
+      Brain.Screen.printAt(50, 50, "WINPOINT AUTON");
       break;
     case 3:
       Brain.Screen.printAt(50, 50, "Swing Test");
@@ -167,7 +167,7 @@ void autonomous(void)
     drive_test();
     break;
   case 2:
-    turn_test();
+    winpoint_auton();
     break;
   case 3:
     swing_test();
@@ -213,7 +213,52 @@ void usercontrol(void)
 
     // Replace this line with chassis.control_tank(); for tank drive
     // or chassis.control_holonomic(); for holo drive.
+
+    // DRIVING
     chassis.control_arcade();
+
+    // INTAKE/FLYWHEEL
+    if (Controller1.ButtonR2.pressing())
+    {
+      IntakeFlywheelMotor.spin(fwd, 12, volt);
+    }
+    else if (Controller1.ButtonR1.pressing())
+    {
+      IntakeFlywheelMotor.spin(fwd, -12, volt);
+    }
+    else
+    {
+      IntakeFlywheelMotor.stop();
+    }
+
+    // LIFT
+    if (Controller1.ButtonL1.pressing())
+    {
+      LiftMotor.spin(fwd, 12, volt);
+    }
+    else if (Controller1.ButtonL2.pressing())
+    {
+      LiftMotor.spin(fwd, -12, volt);
+    }
+    else
+    {
+      LiftMotor.stop();
+    }
+
+    // KICKER
+    if (Controller1.ButtonLeft.pressing())
+    {
+      KickerMotor.spin(fwd, 12, volt);
+    }
+    else
+    {
+      KickerMotor.stop();
+    }
+
+    // PISTONS
+    Controller1.ButtonY.pressed(actuateLeftWing);
+    Controller1.ButtonA.pressed(actuateRightWing);
+    Controller1.ButtonX.pressed(actuateBothWings);
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

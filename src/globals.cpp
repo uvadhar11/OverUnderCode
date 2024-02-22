@@ -4,6 +4,12 @@
 
 // GLOBAL VARIABLES
 // (type specifier needed for all these declarations here)
+
+// driver control
+bool rightWingEnabled = false;
+bool leftWingEnabled = false;
+bool bothWingsEnabled = false;
+
 // autonomous selection
 int autonSelected = 0;              // default auton
 std::string allianceColor = "NONE"; // default alliance color

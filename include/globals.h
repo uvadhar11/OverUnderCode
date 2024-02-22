@@ -4,6 +4,12 @@
 
 // GLOBAL VARIABLES
 
+// driver control
+// pneumatics
+extern bool rightWingEnabled;
+extern bool leftWingEnabled;
+extern bool bothWingsEnabled;
+
 // autonomous selection
 extern int autonSelected;         // can set to a default auton if necessary
 extern std::string allianceColor; // track alliance color

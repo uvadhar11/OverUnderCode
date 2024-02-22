@@ -30,16 +30,50 @@ void drive_test()
 
   // chassis.drive_with_voltage(6, 6);
 
-  chassis.turn_to_angle(180);
+  // chassis.turn_to_angle(180);
+
+  LeftWing.off();
 }
 
-void turn_test()
+void winpoint_auton()
 {
-  chassis.turn_to_angle(5);
-  chassis.turn_to_angle(30);
-  chassis.turn_to_angle(90);
-  chassis.turn_to_angle(225);
-  chassis.turn_to_angle(0);
+  // chassis.turn_to_angle(5);
+  // chassis.turn_to_angle(30);
+  // chassis.turn_to_angle(90);
+  // chassis.turn_to_angle(225);
+  // chassis.turn_to_angle(0);
+
+  // STARTING POSITION:
+
+  // drive back a little bit
+  chassis.drive_distance(6); // drive back a bit
+
+  // wing out
+  LeftWing.off();
+
+  // wait for wing actuation
+  wait(0.2, sec);
+
+  // drive forward to remove triball
+  chassis.drive_distance(-4);
+
+  // retract wing
+  LeftWing.on();
+
+  // quick wait for wing retraction
+  wait(0.2, sec);
+
+  // turn to go touch the wp bar
+  chassis.turn_to_angle(-30);
+
+  // drive forward to bar little bit (then fix the angle)
+  chassis.drive_distance(-28); // -18
+
+  // turn a little bit to face elevation bar with wedge
+  chassis.turn_to_angle(-45);
+
+  // drive forward to touch the elevation bar
+  chassis.drive_distance(-12);
 }
 
 void swing_test()

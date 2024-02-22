@@ -17,3 +17,8 @@ float to_volt(float percent);
 int to_port(int port);
 
 float deadband(float input, float width);
+
+// DRIVER CONTROL FUNCTIONS
+void actuateLeftWing();
+void actuateRightWing();
+void actuateBothWings();

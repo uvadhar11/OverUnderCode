@@ -1,4 +1,5 @@
 #include "vex.h"
+#include "globals.h"
 
 // There is probably a more efficient way to reduce angles than the ones specified below,
 // but these work without question, and you really only have to reduce them once or twice at
@@ -116,4 +117,53 @@ float deadband(float input, float width)
   }
   // if not in this width then just return the input to be used
   return (input);
+}
+
+// DRIVER CONTROL FUNCTIONS
+void actuateLeftWing()
+{
+  if (leftWingEnabled == false)
+  {
+    LeftWing.off();
+    leftWingEnabled = true;
+    // wait(0.1, sec);
+  }
+  else
+  {
+    LeftWing.on();
+    leftWingEnabled = false;
+    // wait(0.1, sec);
+  }
+}
+
+void actuateRightWing()
+{
+  if (rightWingEnabled == false)
+  {
+    RightWing.off();
+    rightWingEnabled = true;
+    // wait(0.1, sec);
+  }
+  else
+  {
+    RightWing.on();
+    rightWingEnabled = false;
+    // wait(0.1, sec);
+  }
+}
+
+void actuateBothWings()
+{
+  if (bothWingsEnabled == false)
+  {
+    RightWing.off();
+    LeftWing.off();
+    bothWingsEnabled = true;
+  }
+  else
+  {
+    RightWing.on();
+    LeftWing.on();
+    bothWingsEnabled = false;
+  }
 }
