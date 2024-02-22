@@ -104,9 +104,9 @@ public:
     // HEADING PID (for drive correction)
     // NOTE: we only want the heading pid to end when the drive pid ends, so we don't need timeout, settle time, and settle error for heading pid.
     float heading_max_voltage = 6;
-    float heading_kp = 0.13;
+    float heading_kp = 0.0;
     float heading_ki = 0.0;
-    float heading_kd = 0.3;
+    float heading_kd = 0.0;
     float heading_starti = 2.27;
 
     // DRIVE CONSTRUCTOR - blank for now until I have time to refactor everything - devices and stuff should go in here instead of setting defaults, etc.

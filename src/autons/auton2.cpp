@@ -76,23 +76,26 @@ void auton2()
     // RightBackMotor.stop();
 
     // SKILLS
-    IntakeFlywheelMotor.spin(reverse, 12, volt);
-    wait(55, sec);
-    IntakeFlywheelMotor.stop();
+    // IntakeFlywheelMotor.spin(reverse, 12, volt);
+    // wait(55, sec);
+    // IntakeFlywheelMotor.stop();
 
-    LeftFrontMotor.spin(forward, 12, volt);
-    RightFrontMotor.spin(forward, 12, volt);
-    LeftMiddleMotor.spin(forward, 12, volt);
-    RightMiddleMotor.spin(forward, 12, volt);
-    LeftBackMotor.spin(forward, 12, volt);
-    RightBackMotor.spin(forward, 12, volt);
+    // LeftFrontMotor.spin(forward, 12, volt);
+    // RightFrontMotor.spin(forward, 12, volt);
+    // LeftMiddleMotor.spin(forward, 12, volt);
+    // RightMiddleMotor.spin(forward, 12, volt);
+    // LeftBackMotor.spin(forward, 12, volt);
+    // RightBackMotor.spin(forward, 12, volt);
 
-    wait(5, sec);
+    // wait(5, sec);
 
-    LeftFrontMotor.stop();
-    RightFrontMotor.stop();
-    LeftMiddleMotor.stop();
-    RightMiddleMotor.stop();
-    LeftBackMotor.stop();
-    RightBackMotor.stop();
+    // LeftFrontMotor.stop();
+    // RightFrontMotor.stop();
+    // LeftMiddleMotor.stop();
+    // RightMiddleMotor.stop();
+    // LeftBackMotor.stop();
+    // RightBackMotor.stop();
+
+    chassis.drive_distance(12, 360, 12, 0, 200, 2000);
+    // chassis.drive_with_voltage(-6, -6);
 }

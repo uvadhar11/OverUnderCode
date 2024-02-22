@@ -16,16 +16,16 @@ controller Controller1 = controller();
 Drive chassis = Drive();
 
 // INITALIZING MOTORS
-// assuming intake is the font
-motor LeftFrontMotor = motor(PORT11, ratio6_1, true);
+// assuming intake is the front
+motor LeftFrontMotor = motor(PORT11, ratio6_1, true); // T
 motor LeftMiddleMotor = motor(PORT12, ratio6_1, true);
 motor LeftBackMotor = motor(PORT13, ratio6_1, true);
-motor RightFrontMotor = motor(PORT1, ratio6_1, false);
+motor RightFrontMotor = motor(PORT1, ratio6_1, false); // F
 motor RightMiddleMotor = motor(PORT2, ratio6_1, false);
 motor RightBackMotor = motor(PORT3, ratio6_1, false);
 motor IntakeFlywheelMotor = motor(PORT4, ratio6_1, false);
 motor LiftMotor = motor(PORT8, ratio36_1, false);
-motor KickerMotor = motor(PORT5, ratio36_1, false);
+motor KickerMotor = motor(PORT5, ratio18_1, false);
 
 // INITALIZING SENSORS
 inertial Inertial = inertial(PORT7);

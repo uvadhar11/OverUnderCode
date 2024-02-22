@@ -115,6 +115,10 @@ void Drive::drive_distance(float distance, float heading, float drive_max_voltag
     // store the start average position of the robot instead of resetting the drive function to 0 each time we write the function and then we determine the error relative to that value.
     float start_average_position = (get_left_position_in() + get_right_position_in()) / 2.0;
 
+    Brain.Screen.clearScreen();
+    Brain.Screen.setCursor(1, 1);
+    Brain.Screen.print(start_average_position);
+
     // set current average position to the starting position because we are just starting the loop
     float average_position = start_average_position;
 
@@ -126,6 +130,7 @@ void Drive::drive_distance(float distance, float heading, float drive_max_voltag
 
         // calculate drive error
         float drive_error = distance + start_average_position - average_position; // distance + start_average_position gets the desired value and then we subtract the current position from that. Need to do this because we aren't resetting the motor positions to 0.
+        printf("drive_error: %f\n", drive_error);
 
         // calculate heading error - finds the shortest path to the desired heading
         float heading_error = reduce_negative_180_to_180(heading - get_absolute_heading());
@@ -140,9 +145,11 @@ void Drive::drive_distance(float distance, float heading, float drive_max_voltag
         // CLAMPING OUTPUT
         // clamp the drive output to the max power (volts)
         drive_output = clamp(drive_output, drive_max_voltage, -drive_max_voltage);
+        printf("drive_output: %f\n", drive_output);
 
         // clamp the heading output to the max power (volts)
         heading_output = clamp(heading_output, heading_max_voltage, -heading_max_voltage);
+        printf("heading_output: %f\n", heading_output);
 
         // DRIVE MOTORS
         drive_with_voltage(drive_output + heading_output, drive_output - heading_output);
