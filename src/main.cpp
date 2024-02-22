@@ -12,14 +12,7 @@ competition Competition;
 /*  you don't have to. Ensure that your motors are reversed properly. For    */
 /*  the drive, spinning all motors forward should drive the robot forward.   */
 /*---------------------------------------------------------------------------*/
-// motor LeftFrontMotor = motor(PORT11, ratio6_1, true); // l: true
-// motor LeftMiddleMotor = motor(PORT12, ratio6_1, true);
-// motor LeftBackMotor = motor(PORT13, ratio6_1, true);
-// motor RightFrontMotor = motor(PORT1, ratio6_1, false);
-// motor RightMiddleMotor = motor(PORT2, ratio6_1, false);
-// motor RightBackMotor = motor(PORT3, ratio6_1, false);
-// motor IntakeFlywheelMotor = motor(PORT10, ratio6_1, false);
-// motor LiftMotor = motor(PORT8, ratio36_1, false);
+// ADD IN ROBOT CONFIG
 
 /*---------------------------------------------------------------------------*/
 /*                             JAR-Template Config                           */
@@ -108,11 +101,17 @@ void pre_auton(void)
 {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
-  default_constants();
+  default_constants(); // sets the default constants for the chassis.
+
+  // CALIBRATE INERTIAL
+  Inertial.calibrate();
 
   while (auto_started == false)
   {                             // Changing the names below will only change their names on the
     Brain.Screen.clearScreen(); // brain screen for auton selection.
+    Brain.Screen.setFont(mono60);
+    Brain.Screen.setPenWidth(2);
+
     switch (current_auton_selection)
     { // Tap the brain screen to cycle through autons.
     case 0:
@@ -161,14 +160,8 @@ void autonomous(void)
   switch (current_auton_selection)
   {
   case 0:
-    drive_test(); // This is the default auton, if you don't select from the brain.
-    // LeftFrontMotor.spin(fwd, 6, volt);
-    // LeftMiddleMotor.spin(fwd, 6, volt);
-    // LeftBackMotor.spin(fwd, 6, volt);
-    // RightFrontMotor.spin(fwd, 6, volt);
-    // RightMiddleMotor.spin(fwd, 6, volt);
-    // RightBackMotor.spin(fwd, 6, volt);
-
+    // NOTHING IS RUN IF YOU DONT SELECT AN AUTON
+    // drive_test(); // This is the default auton, if you don't select from the brain.
     break; // Change these to be your own auton functions in order to use the auton selector.
   case 1:  // Tap the screen to cycle through autons.
     drive_test();

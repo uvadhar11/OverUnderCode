@@ -30,7 +30,7 @@ void drive_test()
 
   // chassis.drive_with_voltage(6, 6);
 
-  chassis.turn_to_angle(180); // t
+  chassis.turn_to_angle(180);
 }
 
 void turn_test()
