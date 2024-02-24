@@ -219,7 +219,7 @@ void full_test()
   chassis.drive_distance(-38, -135, 7, 9);
 
   // turn to goal
-  chassis.turn_to_angle(0);
+  chassis.turn_to_angle(20);
 
   // drive forward to score
   RightWing.off();
@@ -244,6 +244,9 @@ void full_test()
   RightWing.off();
   LeftWing.off();
   chassis.drive_distance(-30, 0, 12, 12, 1.5, 100, 900);
+
+  // back little
+  chassis.drive_distance(10, 0, 12, 12, 1.5, 100, 400);
 }
 
 void odom_test()
