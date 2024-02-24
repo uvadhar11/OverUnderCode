@@ -122,22 +122,24 @@ float deadband(float input, float width)
 // DRIVER CONTROL FUNCTIONS
 void actuateLeftWing()
 {
+  Brain.Screen.setCursor(1, 1);
+  Brain.Screen.print("Left Wing");
   if (leftWingEnabled == false)
   {
     LeftWing.off();
     leftWingEnabled = true;
-    // wait(0.1, sec);
   }
   else
   {
     LeftWing.on();
     leftWingEnabled = false;
-    // wait(0.1, sec);
   }
 }
 
 void actuateRightWing()
 {
+  Brain.Screen.setCursor(1, 1);
+  Brain.Screen.print("RIGHT Wing");
   if (rightWingEnabled == false)
   {
     RightWing.off();

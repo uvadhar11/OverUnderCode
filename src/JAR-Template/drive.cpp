@@ -481,7 +481,7 @@ void Drive::control_arcade()
   // calculates lateral movement
   float throttle = deadband(controller(primary).Axis3.value(), 5);
   // calculates turning
-  float turn = deadband(controller(primary).Axis1.value(), 5);
+  float turn = deadband(controller(primary).Axis1.value(), 2);
   DriveL.spin(fwd, to_volt(throttle + turn), volt);
   DriveR.spin(fwd, to_volt(throttle - turn), volt);
 }

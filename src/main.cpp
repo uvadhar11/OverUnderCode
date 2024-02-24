@@ -162,6 +162,7 @@ void autonomous(void)
   case 0:
     // NOTHING IS RUN IF YOU DONT SELECT AN AUTON
     // drive_test(); // This is the default auton, if you don't select from the brain.
+    full_test();
     break; // Change these to be your own auton functions in order to use the auton selector.
   case 1:  // Tap the screen to cycle through autons.
     drive_test();
@@ -215,16 +216,31 @@ void usercontrol(void)
     // or chassis.control_holonomic(); for holo drive.
 
     // DRIVING
-    chassis.control_arcade();
+    // chassis.control_arcade();
+    // DRIVETRAIN CODE
+    double turnImportance = 0.8; // for changing the turn speed faster
+    double speed = 1;            // changing speed
+
+    double turnVal = Controller1.Axis1.position();
+    double forwardVal = Controller1.Axis3.position();
+    double turnVolts = (turnVal * 0.12 * speed);
+    double forwardVolts = (forwardVal * 0.12 * (1 - (fabs(turnVolts) / 12.0) * turnImportance) * speed);
+
+    LeftFrontMotor.spin(fwd, forwardVolts + turnVolts, volt);
+    RightFrontMotor.spin(fwd, forwardVolts - turnVolts, volt);
+    LeftMiddleMotor.spin(fwd, forwardVolts + turnVolts, volt);
+    RightMiddleMotor.spin(fwd, forwardVolts - turnVolts, volt);
+    LeftBackMotor.spin(fwd, forwardVolts + turnVolts, volt);
+    RightBackMotor.spin(fwd, forwardVolts - turnVolts, volt);
 
     // INTAKE/FLYWHEEL
     if (Controller1.ButtonR2.pressing())
     {
-      IntakeFlywheelMotor.spin(fwd, 12, volt);
+      IntakeFlywheelMotor.spin(fwd, 8, volt);
     }
     else if (Controller1.ButtonR1.pressing())
     {
-      IntakeFlywheelMotor.spin(fwd, -12, volt);
+      IntakeFlywheelMotor.spin(fwd, -8, volt);
     }
     else
     {
@@ -248,7 +264,7 @@ void usercontrol(void)
     // KICKER
     if (Controller1.ButtonLeft.pressing())
     {
-      KickerMotor.spin(fwd, 12, volt);
+      KickerMotor.spin(fwd, 10, volt);
     }
     else
     {
@@ -256,8 +272,8 @@ void usercontrol(void)
     }
 
     // PISTONS
-    Controller1.ButtonY.pressed(actuateLeftWing);
     Controller1.ButtonA.pressed(actuateRightWing);
+    Controller1.ButtonY.pressed(actuateLeftWing);
     Controller1.ButtonX.pressed(actuateBothWings);
 
     wait(20, msec); // Sleep the task for a short amount of time to

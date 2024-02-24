@@ -9,8 +9,8 @@ void default_constants()
   chassis.set_swing_constants(12, .3, .001, 2, 15);
 
   // Each exit condition set is in the form (settle_error, settle_time, timeout).
-  chassis.set_drive_exit_conditions(1.5, 300, 5000);
-  chassis.set_turn_exit_conditions(1, 300, 3000);
+  chassis.set_drive_exit_conditions(1.5, 100, 5000);
+  chassis.set_turn_exit_conditions(1, 100, 3000);
   chassis.set_swing_exit_conditions(1, 300, 3000);
 }
 
@@ -76,20 +76,174 @@ void winpoint_auton()
   chassis.drive_distance(-12);
 }
 
+// 3 TRIBALL AUTON
 void swing_test()
 {
-  chassis.left_swing_to_angle(90);
-  chassis.right_swing_to_angle(0);
+  // chassis.left_swing_to_angle(90);
+  // chassis.right_swing_to_angle(0);
+
+  // spool up intake motor
+  IntakeFlywheelMotor.spin(fwd, 12, volt);
+  wait(1.2, sec);
+  // IntakeFlywheelMotor.stop();
+
+  // lift down
+  LiftMotor.spinFor(reverse, 180, degrees);
+
+  // // spool up intake motor
+  // IntakeFlywheelMotor.spin(fwd, 12, volt);
+  // wait(1.2, sec);
+  // IntakeFlywheelMotor.stop();
+
+  // drive slightly forward
+  chassis.drive_distance(1);
+
+  // wait a second
+  wait(0.3, sec);
+
+  // drive back
+  chassis.drive_distance(-34);
+
+  // turn to goal
+  chassis.turn_to_angle(-45);
+
+  // piston out
+  LeftWing.off();
+
+  wait(0.2, sec);
+
+  // drive forward to take the triball out
+  chassis.drive_distance(-14);
+
+  // wait real quick for triball to get out
+  wait(0.15, sec);
+
+  // close wing
+  LeftWing.on();
+
+  // turn to goal
+  chassis.turn_to_angle(-60);
+
+  // drive forward to score
+  chassis.drive_distance(-20);
+
+  // quick wait
+  wait(0.05, sec);
+
+  // drive back
+  chassis.drive_distance(10);
+
+  // turn to goal with intake
+  chassis.turn_to_angle(120);
+
+  IntakeFlywheelMotor.stop();
+
+  // drive to score
+  chassis.drive_distance(10);
 }
 
+//  SKILLS
 void full_test()
 {
-  chassis.drive_distance(24);
-  chassis.turn_to_angle(-45);
-  chassis.drive_distance(-36);
-  chassis.right_swing_to_angle(-90);
-  chassis.drive_distance(24);
+  // chassis.drive_distance(24);
+  // chassis.turn_to_angle(-45);
+  // chassis.drive_distance(-36);
+  // chassis.right_swing_to_angle(-90);
+  // chassis.drive_distance(24);
+  // chassis.turn_to_angle(0);
+
+  // wall ride matchload bar
+  chassis.drive_distance(25, 45, 6, 6);
+
+  // turn to goal
+  chassis.turn_to_angle(90);
+
+  // push triballs in goal
+  chassis.drive_distance(20, 90, 12, 12, 1.5, 100, 1000);
+
+  // back to matchload bar
+  chassis.drive_distance(-22);
+
+  // angle for matchloading
+  chassis.turn_to_angle(-20);
+
+  // drive back to make sure we are touching the bar
+  chassis.drive_distance(3);
+
+  // matchload
+  wait(2, sec);
+  // KickerMotor.spin(fwd, 10, volt);
+  // wait(35, sec);
+  // KickerMotor.stop();
+
+  // turn to cross side
+  chassis.turn_to_angle(45);
+  chassis.drive_distance(-24);
+
+  // angle straight
   chassis.turn_to_angle(0);
+
+  // drive across
+  chassis.drive_distance(-60, 0, 10, 12);
+  // slow to make sure triballs don't fly over into zone
+  chassis.drive_distance(-24, 0, 6, 6);
+
+  // turn to goal
+  chassis.turn_to_angle(-45);
+
+  // forward a little bit
+  chassis.drive_distance(-14);
+
+  // turn to goal to cover more triballs
+  chassis.turn_to_angle(-60);
+
+  // drive forward to score
+  chassis.drive_distance(-20, -60, 12, 12, 1.5, 100, 1200);
+
+  // back
+  chassis.drive_distance(7);
+
+  // again
+  chassis.drive_distance(-10, -60, 12, 12, 1.5, 100, 600);
+
+  // back
+  chassis.drive_distance(22);
+
+  // turn
+  chassis.turn_to_angle(-135);
+
+  // wing off for funneling
+  // LeftWing.off();
+
+  // drive forward
+  chassis.drive_distance(-38, -135, 7, 9);
+
+  // turn to goal
+  chassis.turn_to_angle(0);
+
+  // drive forward to score
+  RightWing.off();
+  chassis.drive_distance(-30, 0, 8, 10, 1.5, 100, 900);
+
+  // wings off
+  LeftWing.on();
+  RightWing.on();
+
+  // drive back and angle
+  chassis.drive_distance(30, 30, 12, 12, 1.5, 150, 900);
+
+  // score
+  RightWing.off();
+  chassis.drive_distance(-30, 0, 12, 12, 1.5, 150, 900);
+
+  // drive back and angle
+  RightWing.on();
+  chassis.drive_distance(30, 30, 12, 12, 1.5, 150, 900);
+
+  // score
+  RightWing.off();
+  LeftWing.off();
+  chassis.drive_distance(-30, 0, 12, 12, 1.5, 100, 900);
 }
 
 void odom_test()
