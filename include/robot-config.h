@@ -20,6 +20,7 @@ extern vex::motor KickerMotor;
 
 // Declaring Sensors
 extern vex::inertial Inertial;
+extern vex::rotation KickerRotation;
 
 // Declaring Pistons
 extern vex::led LeftWing;

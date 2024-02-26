@@ -159,7 +159,7 @@ void full_test()
   chassis.turn_to_angle(90);
 
   // push triballs in goal
-  chassis.drive_distance(20, 90, 12, 12, 1.5, 100, 1000);
+  chassis.drive_distance(20, 90, 10, 12, 1.5, 100, 1000);
 
   // back to matchload bar
   chassis.drive_distance(-22);
@@ -171,10 +171,17 @@ void full_test()
   chassis.drive_distance(3);
 
   // matchload
-  wait(2, sec);
-  // KickerMotor.spin(fwd, 10, volt);
-  // wait(35, sec);
-  // KickerMotor.stop();
+  // wait(2, sec);
+  KickerMotor.spin(fwd, 11, volt);
+  wait(32, sec);
+  KickerMotor.stop();
+
+  // moving kicker under
+  while (KickerRotation.angle() > 310)
+  {
+    KickerMotor.spin(fwd, 8, volt);
+  }
+  KickerMotor.stop(hold); // hold position of kicker motor
 
   // turn to cross side
   chassis.turn_to_angle(45);
@@ -186,13 +193,13 @@ void full_test()
   // drive across
   chassis.drive_distance(-60, 0, 10, 12);
   // slow to make sure triballs don't fly over into zone
-  chassis.drive_distance(-24, 0, 6, 6);
+  chassis.drive_distance(-24, 0, 6, 6, 1.5, 100, 1000);
 
   // turn to goal
   chassis.turn_to_angle(-45);
 
   // forward a little bit
-  chassis.drive_distance(-14);
+  chassis.drive_distance(-14, -45, 8, 12, 1.5, 100, 700);
 
   // turn to goal to cover more triballs
   chassis.turn_to_angle(-60);
@@ -201,7 +208,7 @@ void full_test()
   chassis.drive_distance(-20, -60, 12, 12, 1.5, 100, 1200);
 
   // back
-  chassis.drive_distance(7);
+  chassis.drive_distance(7, -60, 8, 12, 1.5, 100, 700);
 
   // again
   chassis.drive_distance(-10, -60, 12, 12, 1.5, 100, 600);
@@ -246,32 +253,90 @@ void full_test()
   chassis.drive_distance(-30, 0, 12, 12, 1.5, 100, 900);
 
   // back little
-  chassis.drive_distance(10, 0, 12, 12, 1.5, 100, 400);
+  // chassis.drive_distance(10, 0, 12, 12, 1.5, 100, 400);
 }
 
 void odom_test()
 {
-  chassis.set_coordinates(0, 0, 0);
-  while (1)
-  {
-    Brain.Screen.clearScreen();
-    Brain.Screen.printAt(0, 50, "X: %f", chassis.get_X_position());
-    Brain.Screen.printAt(0, 70, "Y: %f", chassis.get_Y_position());
-    Brain.Screen.printAt(0, 90, "Heading: %f", chassis.get_absolute_heading());
-    Brain.Screen.printAt(0, 110, "ForwardTracker: %f", chassis.get_ForwardTracker_position());
-    Brain.Screen.printAt(0, 130, "SidewaysTracker: %f", chassis.get_SidewaysTracker_position());
-    task::sleep(20);
-  }
+  // KickerMotor.setVelocity(100, velocityUnits::pct);
+  // KickerMotor.setPosition(0, deg);
+  // KickerMotor.spinToPosition(600, deg, true);
+  // chassis.set_coordinates(0, 0, 0);
+  // while (1)
+  // {
+  //   Brain.Screen.clearScreen();
+  //   Brain.Screen.printAt(0, 50, "X: %f", chassis.get_X_position());
+  //   Brain.Screen.printAt(0, 70, "Y: %f", chassis.get_Y_position());
+  //   Brain.Screen.printAt(0, 90, "Heading: %f", chassis.get_absolute_heading());
+  //   Brain.Screen.printAt(0, 110, "ForwardTracker: %f", chassis.get_ForwardTracker_position());
+  //   Brain.Screen.printAt(0, 130, "SidewaysTracker: %f", chassis.get_SidewaysTracker_position());
+  //   task::sleep(20);
+  // }
+  // while (KickerRotation.angle() > 310)
+  // {
+  //   KickerMotor.spin(fwd, 8, volt);
+  // }
+  // KickerMotor.stop(hold); // hold position of kicker motor
+
+  // score triball
+  LeftFrontMotor.spin(fwd, 12, volt);
+  RightFrontMotor.spin(fwd, 12, volt);
+  LeftMiddleMotor.spin(fwd, 12, volt);
+  RightMiddleMotor.spin(fwd, 12, volt);
+  LeftBackMotor.spin(fwd, 12, volt);
+  RightBackMotor.spin(fwd, 12, volt);
+
+  wait(1.75, sec);
+
+  LeftFrontMotor.stop();
+  RightFrontMotor.stop();
+  LeftMiddleMotor.stop();
+  RightMiddleMotor.stop();
+  LeftBackMotor.stop();
+  RightBackMotor.stop();
+
+  // drive back
+  LeftFrontMotor.spin(reverse, 12, volt);
+  RightFrontMotor.spin(reverse, 12, volt);
+  LeftMiddleMotor.spin(reverse, 12, volt);
+  RightMiddleMotor.spin(reverse, 12, volt);
+  LeftBackMotor.spin(reverse, 12, volt);
+  RightBackMotor.spin(reverse, 12, volt);
+
+  wait(0.4, sec);
+
+  LeftFrontMotor.stop();
+  RightFrontMotor.stop();
+  LeftMiddleMotor.stop();
+  RightMiddleMotor.stop();
+  LeftBackMotor.stop();
+  RightBackMotor.stop();
 }
 
 void tank_odom_test()
 {
-  odom_constants();
-  chassis.set_coordinates(0, 0, 0);
-  chassis.turn_to_point(24, 24);
-  chassis.drive_to_point(24, 24);
-  chassis.drive_to_point(0, 0);
-  chassis.turn_to_angle(0);
+  // odom_constants();
+  // chassis.set_coordinates(0, 0, 0);
+  // chassis.turn_to_point(24, 24);
+  // chassis.drive_to_point(24, 24);
+  // chassis.drive_to_point(0, 0);
+  // chassis.turn_to_angle(0);
+
+  // activate right wing, Start pos: 45 degree angle wedge first to most middle triball
+  RightWing.off();
+
+  // drive into middle triball
+  // goodPID(-2100, 1, 0, 2000);
+
+  // turn to middle barrier
+  // turnPID(45, 1);
+  // chassis.drive_distance(-47, 45, 10, 0.3, 1.5, 100, 4000);
+  chassis.drive_distance(-47);
+
+  chassis.turn_to_angle(45);
+
+  // close right wing
+  RightWing.on();
 }
 
 void holonomic_odom_test()

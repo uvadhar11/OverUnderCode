@@ -162,7 +162,7 @@ void autonomous(void)
   case 0:
     // NOTHING IS RUN IF YOU DONT SELECT AN AUTON
     // drive_test(); // This is the default auton, if you don't select from the brain.
-    full_test();
+    tank_odom_test();
     break; // Change these to be your own auton functions in order to use the auton selector.
   case 1:  // Tap the screen to cycle through autons.
     drive_test();
@@ -264,11 +264,24 @@ void usercontrol(void)
     // KICKER
     if (Controller1.ButtonLeft.pressing())
     {
-      KickerMotor.spin(fwd, 10, volt);
+      KickerMotor.spin(fwd, 11, volt);
     }
     else
     {
-      KickerMotor.stop();
+      KickerMotor.stop(hold);
+    }
+
+    // kicker button
+    if (Controller1.ButtonB.pressing())
+    {
+      // KickerMotor.setVelocity(100, velocityUnits::pct);
+      // KickerMotor.setPosition(0, deg);
+      // KickerMotor.spinToPosition(600, deg, true);
+
+      while (KickerRotation.angle() > 310)
+      {
+        KickerMotor.spin(fwd, 8, volt);
+      }
     }
 
     // PISTONS
