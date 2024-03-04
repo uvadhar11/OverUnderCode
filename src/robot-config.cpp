@@ -22,7 +22,8 @@ motor RightFrontMotor = motor(PORT1, ratio6_1, false);
 motor RightMiddleMotor = motor(PORT2, ratio6_1, false);
 motor RightBackMotor = motor(PORT3, ratio6_1, false);
 motor IntakeFlywheelMotor = motor(PORT19, ratio6_1, false);
-motor KickerMotor = motor(PORT5, ratio6_1, false);
+motor KickerMotor = motor(PORT17, ratio36_1, false);
+motor KickerMotor2 = motor(PORT5, ratio36_1, true);
 motor LiftMotor = motor(PORT8, ratio36_1, false);
 
 // SENSORS

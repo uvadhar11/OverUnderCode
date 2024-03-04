@@ -16,6 +16,7 @@ extern vex::motor RightMiddleMotor;
 extern vex::motor RightBackMotor;
 extern vex::motor IntakeFlywheelMotor;
 extern vex::motor LiftMotor;
+extern vex::motor KickerMotor2;
 extern vex::motor KickerMotor;
 
 // Declaring Sensors

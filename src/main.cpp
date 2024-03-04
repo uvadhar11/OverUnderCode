@@ -264,7 +264,8 @@ void usercontrol(void)
     // KICKER
     if (Controller1.ButtonLeft.pressing())
     {
-      KickerMotor.spin(fwd, 11, volt);
+      KickerMotor.spin(fwd, 12, volt);
+      KickerMotor2.spin(fwd, 12, volt);
     }
     else
     {
