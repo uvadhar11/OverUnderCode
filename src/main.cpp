@@ -218,7 +218,7 @@ void usercontrol(void)
     // DRIVING
     // chassis.control_arcade();
     // DRIVETRAIN CODE
-    double turnImportance = 0.8; // for changing the turn speed faster
+    double turnImportance = 0.6; // for changing the turn speed faster
     double speed = 1;            // changing speed
 
     double turnVal = Controller1.Axis1.position();

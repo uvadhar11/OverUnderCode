@@ -8,6 +8,18 @@ extern controller Controller1;
 
 // VEXcode devices
 // Declaring Motors
+// OLD BOT
+// extern vex::motor LeftFrontMotor;
+// extern vex::motor LeftMiddleMotor;
+// extern vex::motor LeftBackMotor;
+// extern vex::motor RightFrontMotor;
+// extern vex::motor RightMiddleMotor;
+// extern vex::motor RightBackMotor;
+// extern vex::motor IntakeFlywheelMotor;
+// extern vex::motor LiftMotor;
+// extern vex::motor KickerMotor2;
+// extern vex::motor KickerMotor;
+// NEW BOT
 extern vex::motor LeftFrontMotor;
 extern vex::motor LeftMiddleMotor;
 extern vex::motor LeftBackMotor;
