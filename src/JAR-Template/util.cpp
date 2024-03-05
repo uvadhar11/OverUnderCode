@@ -169,3 +169,17 @@ void actuateBothWings()
     bothWingsEnabled = false;
   }
 }
+
+void actuateIntakePiston()
+{
+  if (intakePistonEnabled == false)
+  {
+    IntakePiston.on();
+    intakePistonEnabled = true;
+  }
+  else
+  {
+    IntakePiston.off();
+    intakePistonEnabled = false;
+  }
+}

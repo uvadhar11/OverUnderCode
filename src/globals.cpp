@@ -9,6 +9,7 @@
 bool rightWingEnabled = false;
 bool leftWingEnabled = false;
 bool bothWingsEnabled = false;
+bool intakePistonEnabled = false;
 
 // autonomous selection
 int autonSelected = 0;              // default auton

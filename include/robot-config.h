@@ -36,6 +36,7 @@ extern vex::inertial Inertial;
 extern vex::rotation KickerRotation;
 
 // Declaring Pistons
+extern vex::led IntakePiston;
 extern vex::led LeftWing;
 extern vex::led RightWing;
 

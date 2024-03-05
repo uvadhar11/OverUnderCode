@@ -34,7 +34,7 @@ motor LeftBackMotor = motor(PORT20, ratio6_1, true);
 motor RightFrontMotor = motor(PORT1, ratio6_1, false);
 motor RightMiddleMotor = motor(PORT9, ratio6_1, true);
 motor RightBackMotor = motor(PORT10, ratio6_1, false);
-motor IntakeFlywheelMotor = motor(PORT4, ratio6_1, false);
+motor IntakeFlywheelMotor = motor(PORT13, ratio18_1, false);
 motor KickerMotor = motor(PORT17, ratio36_1, false);
 motor KickerMotor2 = motor(PORT5, ratio36_1, true);
 motor LiftMotor = motor(PORT8, ratio36_1, false);
@@ -44,6 +44,7 @@ inertial Inertial = inertial(PORT7);
 rotation KickerRotation = rotation(PORT15);
 
 // PISTONS
+led IntakePiston = led(Brain.ThreeWirePort.A);
 led LeftWing = led(Brain.ThreeWirePort.B);
 led RightWing = led(Brain.ThreeWirePort.C);
 

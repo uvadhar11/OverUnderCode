@@ -269,7 +269,8 @@ void usercontrol(void)
     }
     else
     {
-      KickerMotor.stop(hold);
+      KickerMotor.stop(); // hold
+      KickerMotor2.stop();
     }
 
     // kicker button
@@ -289,6 +290,7 @@ void usercontrol(void)
     Controller1.ButtonA.pressed(actuateRightWing);
     Controller1.ButtonY.pressed(actuateLeftWing);
     Controller1.ButtonX.pressed(actuateBothWings);
+    Controller1.ButtonDown.pressed(actuateIntakePiston);
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

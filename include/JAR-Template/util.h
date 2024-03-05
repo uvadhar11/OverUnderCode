@@ -22,3 +22,4 @@ float deadband(float input, float width);
 void actuateLeftWing();
 void actuateRightWing();
 void actuateBothWings();
+void actuateIntakePiston();
