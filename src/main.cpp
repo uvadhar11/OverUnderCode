@@ -236,30 +236,30 @@ void usercontrol(void)
     // INTAKE/FLYWHEEL
     if (Controller1.ButtonR2.pressing())
     {
-      IntakeFlywheelMotor.spin(fwd, 8, volt);
+      IntakeFlywheelMotor.spin(fwd, 12, volt);
     }
     else if (Controller1.ButtonR1.pressing())
     {
-      IntakeFlywheelMotor.spin(fwd, -8, volt);
+      IntakeFlywheelMotor.spin(fwd, -12, volt);
     }
     else
     {
       IntakeFlywheelMotor.stop();
     }
 
-    // LIFT
-    if (Controller1.ButtonL1.pressing())
-    {
-      LiftMotor.spin(fwd, 12, volt);
-    }
-    else if (Controller1.ButtonL2.pressing())
-    {
-      LiftMotor.spin(fwd, -12, volt);
-    }
-    else
-    {
-      LiftMotor.stop();
-    }
+    // // LIFT
+    // if (Controller1.ButtonL1.pressing())
+    // {
+    //   LiftMotor.spin(fwd, 12, volt);
+    // }
+    // else if (Controller1.ButtonL2.pressing())
+    // {
+    //   LiftMotor.spin(fwd, -12, volt);
+    // }
+    // else
+    // {
+    //   LiftMotor.stop();
+    // }
 
     // KICKER
     if (Controller1.ButtonLeft.pressing())
@@ -274,17 +274,17 @@ void usercontrol(void)
     }
 
     // kicker button
-    if (Controller1.ButtonB.pressing())
-    {
-      // KickerMotor.setVelocity(100, velocityUnits::pct);
-      // KickerMotor.setPosition(0, deg);
-      // KickerMotor.spinToPosition(600, deg, true);
+    // if (Controller1.ButtonB.pressing())
+    // {
+    //   // KickerMotor.setVelocity(100, velocityUnits::pct);
+    //   // KickerMotor.setPosition(0, deg);
+    //   // KickerMotor.spinToPosition(600, deg, true);
 
-      while (KickerRotation.angle() > 310)
-      {
-        KickerMotor.spin(fwd, 8, volt);
-      }
-    }
+    //   while (KickerRotation.angle() > 310)
+    //   {
+    //     KickerMotor.spin(fwd, 8, volt);
+    //   }
+    // }
 
     // PISTONS
     Controller1.ButtonA.pressed(actuateRightWing);
