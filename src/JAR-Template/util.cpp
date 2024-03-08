@@ -120,66 +120,66 @@ float deadband(float input, float width)
 }
 
 // DRIVER CONTROL FUNCTIONS
-void actuateLeftWing()
-{
-  Brain.Screen.setCursor(1, 1);
-  Brain.Screen.print("Left Wing");
-  if (leftWingEnabled == false)
-  {
-    LeftWing.off();
-    leftWingEnabled = true;
-  }
-  else
-  {
-    LeftWing.on();
-    leftWingEnabled = false;
-  }
-}
+// void actuateLeftWing()
+// {
+//   Brain.Screen.setCursor(1, 1);
+//   Brain.Screen.print("Left Wing");
+//   if (leftWingEnabled == false)
+//   {
+//     LeftWing.off();
+//     leftWingEnabled = true;
+//   }
+//   else
+//   {
+//     LeftWing.on();
+//     leftWingEnabled = false;
+//   }
+// }
 
-void actuateRightWing()
-{
-  Brain.Screen.setCursor(1, 1);
-  Brain.Screen.print("RIGHT Wing");
-  if (rightWingEnabled == false)
-  {
-    RightWing.off();
-    rightWingEnabled = true;
-    // wait(0.1, sec);
-  }
-  else
-  {
-    RightWing.on();
-    rightWingEnabled = false;
-    // wait(0.1, sec);
-  }
-}
+// void actuateRightWing()
+// {
+//   Brain.Screen.setCursor(1, 1);
+//   Brain.Screen.print("RIGHT Wing");
+//   if (rightWingEnabled == false)
+//   {
+//     RightWing.off();
+//     rightWingEnabled = true;
+//     // wait(0.1, sec);
+//   }
+//   else
+//   {
+//     RightWing.on();
+//     rightWingEnabled = false;
+//     // wait(0.1, sec);
+//   }
+// }
 
-void actuateBothWings()
-{
-  if (bothWingsEnabled == false)
-  {
-    RightWing.off();
-    LeftWing.off();
-    bothWingsEnabled = true;
-  }
-  else
-  {
-    RightWing.on();
-    LeftWing.on();
-    bothWingsEnabled = false;
-  }
-}
+// void actuateBothWings()
+// {
+//   if (bothWingsEnabled == false)
+//   {
+//     RightWing.off();
+//     LeftWing.off();
+//     bothWingsEnabled = true;
+//   }
+//   else
+//   {
+//     RightWing.on();
+//     LeftWing.on();
+//     bothWingsEnabled = false;
+//   }
+// }
 
-void actuateIntakePiston()
-{
-  if (intakePistonEnabled == false)
-  {
-    IntakePiston.on();
-    intakePistonEnabled = true;
-  }
-  else
-  {
-    IntakePiston.off();
-    intakePistonEnabled = false;
-  }
-}
+// void actuateIntakePiston()
+// {
+//   if (intakePistonEnabled == false)
+//   {
+//     IntakePiston.on();
+//     intakePistonEnabled = true;
+//   }
+//   else
+//   {
+//     IntakePiston.off();
+//     intakePistonEnabled = false;
+//   }
+// }

@@ -19,7 +19,7 @@ int to_port(int port);
 float deadband(float input, float width);
 
 // DRIVER CONTROL FUNCTIONS
-void actuateLeftWing();
-void actuateRightWing();
-void actuateBothWings();
-void actuateIntakePiston();
+// void actuateLeftWing();
+// void actuateRightWing();
+// void actuateBothWings();
+// void actuateIntakePiston();

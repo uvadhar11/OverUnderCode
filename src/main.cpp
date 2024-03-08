@@ -47,7 +47,7 @@ Drive chassis(
     // External ratio, must be in decimal, in the format of input teeth/output teeth.
     // If your motor has an 84-tooth gear and your wheel has a 60-tooth gear, this value will be 1.4.
     // If the motor drives the wheel directly, this value is 1:
-    0.8,
+    0.75, // 0.8
 
     // Gyro scale, this is what your gyro reads when you spin the robot 360 degrees.
     // For most cases 360 will do fine here, but this scale factor can be very helpful when precision is necessary.
@@ -96,6 +96,94 @@ Drive chassis(
 
 int current_auton_selection = 0;
 bool auto_started = false;
+
+bool rightWingEnabled = false;
+bool leftWingEnabled = false;
+bool bothWingsEnabled = false;
+bool intakePistonEnabled = false;
+bool balancePistonEnabled = false;
+
+// DRIVER CONTROL FUNCTIONS
+void actuateLeftWing()
+{
+  Brain.Screen.setCursor(1, 1);
+  Brain.Screen.print("Left Wing");
+  Controller1.Screen.print("L BOZO");
+  if (leftWingEnabled == false)
+  {
+    LeftWing.off();
+    leftWingEnabled = true;
+    wait(0.2, sec);
+  }
+  else
+  {
+    LeftWing.on();
+    leftWingEnabled = false;
+    wait(0.3, sec);
+  }
+}
+
+void actuateRightWing()
+{
+  // Brain.Screen.setCursor(1, 1);
+  // Brain.Screen.print("RIGHT Wing");
+  if (rightWingEnabled == false)
+  {
+    RightWing.off();
+    rightWingEnabled = true;
+    // wait(0.1, sec);
+  }
+  else
+  {
+    RightWing.on();
+    rightWingEnabled = false;
+    // wait(0.1, sec);
+  }
+}
+
+void actuateBothWings()
+{
+  if (bothWingsEnabled == false)
+  {
+    RightWing.off();
+    LeftWing.off();
+    bothWingsEnabled = true;
+  }
+  else
+  {
+    RightWing.on();
+    LeftWing.on();
+    bothWingsEnabled = false;
+  }
+}
+
+void actuateIntakePiston()
+{
+  if (intakePistonEnabled == false)
+  {
+    IntakePiston.on();
+    intakePistonEnabled = true;
+  }
+  else
+  {
+    IntakePiston.off();
+    intakePistonEnabled = false;
+  }
+}
+
+void actuateBalancePiston()
+{
+  if (balancePistonEnabled == false)
+  {
+    BalancePiston.on();
+    balancePistonEnabled = true;
+  }
+  else
+  {
+    BalancePiston.off();
+    balancePistonEnabled = false;
+  }
+}
 
 void pre_auton(void)
 {
@@ -162,7 +250,8 @@ void autonomous(void)
   case 0:
     // NOTHING IS RUN IF YOU DONT SELECT AN AUTON
     // drive_test(); // This is the default auton, if you don't select from the brain.
-    tank_odom_test();
+    // holonomic_odom_test();
+    holonomic_odom_test();
     break; // Change these to be your own auton functions in order to use the auton selector.
   case 1:  // Tap the screen to cycle through autons.
     drive_test();
@@ -289,8 +378,9 @@ void usercontrol(void)
     // PISTONS
     Controller1.ButtonA.pressed(actuateRightWing);
     Controller1.ButtonY.pressed(actuateLeftWing);
-    Controller1.ButtonX.pressed(actuateBothWings);
-    Controller1.ButtonDown.pressed(actuateIntakePiston);
+    Controller1.ButtonL1.pressed(actuateBothWings);
+    Controller1.ButtonL2.pressed(actuateIntakePiston);
+    Controller1.ButtonDown.pressed(actuateBalancePiston);
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

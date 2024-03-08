@@ -6,10 +6,10 @@
 
 // driver control
 // pneumatics
-extern bool rightWingEnabled;
-extern bool leftWingEnabled;
-extern bool bothWingsEnabled;
-extern bool intakePistonEnabled;
+// extern bool rightWingEnabled;
+// extern bool leftWingEnabled;
+// extern bool bothWingsEnabled;
+// extern bool intakePistonEnabled;
 
 // autonomous selection
 extern int autonSelected;         // can set to a default auton if necessary

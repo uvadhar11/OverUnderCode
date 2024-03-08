@@ -28,13 +28,13 @@ controller Controller1 = controller();
 // motor LiftMotor = motor(PORT8, ratio36_1, false);
 
 // NEW BOT
-motor LeftFrontMotor = motor(PORT11, ratio6_1, true); // l: true
-motor LeftMiddleMotor = motor(PORT19, ratio6_1, false);
-motor LeftBackMotor = motor(PORT20, ratio6_1, true);
+motor LeftFrontMotor = motor(PORT11, ratio6_1, true);   // l: true
+motor LeftMiddleMotor = motor(PORT20, ratio6_1, false); // f
+motor LeftBackMotor = motor(PORT19, ratio6_1, true);    // t
 motor RightFrontMotor = motor(PORT1, ratio6_1, false);
 motor RightMiddleMotor = motor(PORT9, ratio6_1, true);
 motor RightBackMotor = motor(PORT10, ratio6_1, false);
-motor IntakeFlywheelMotor = motor(PORT13, ratio6_1, false);
+motor IntakeFlywheelMotor = motor(PORT14, ratio6_1, false);
 motor KickerMotor = motor(PORT17, ratio36_1, false);
 motor KickerMotor2 = motor(PORT5, ratio36_1, true);
 motor LiftMotor = motor(PORT8, ratio36_1, false);
@@ -47,6 +47,7 @@ rotation KickerRotation = rotation(PORT15);
 led IntakePiston = led(Brain.ThreeWirePort.H);
 led LeftWing = led(Brain.ThreeWirePort.B);
 led RightWing = led(Brain.ThreeWirePort.A);
+led BalancePiston = led(Brain.ThreeWirePort.C);
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

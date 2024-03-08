@@ -39,6 +39,7 @@ extern vex::rotation KickerRotation;
 extern vex::led IntakePiston;
 extern vex::led LeftWing;
 extern vex::led RightWing;
+extern vex::led BalancePiston;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
