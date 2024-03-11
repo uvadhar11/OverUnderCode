@@ -177,11 +177,13 @@ void actuateBalancePiston()
   {
     BalancePiston.on();
     balancePistonEnabled = true;
+    wait(0.2, sec);
   }
   else
   {
     BalancePiston.off();
     balancePistonEnabled = false;
+    wait(0.3, sec);
   }
 }
 
@@ -251,7 +253,7 @@ void autonomous(void)
     // NOTHING IS RUN IF YOU DONT SELECT AN AUTON
     // drive_test(); // This is the default auton, if you don't select from the brain.
     // holonomic_odom_test();
-    holonomic_odom_test();
+    tank_odom_test();
     break; // Change these to be your own auton functions in order to use the auton selector.
   case 1:  // Tap the screen to cycle through autons.
     drive_test();
@@ -307,8 +309,8 @@ void usercontrol(void)
     // DRIVING
     // chassis.control_arcade();
     // DRIVETRAIN CODE
-    double turnImportance = 0.6; // for changing the turn speed faster
-    double speed = 1;            // changing speed
+    double turnImportance = 0.55; // for changing the turn speed faster - 0.6
+    double speed = 1;             // changing speed
 
     double turnVal = Controller1.Axis1.position();
     double forwardVal = Controller1.Axis3.position();
@@ -381,6 +383,56 @@ void usercontrol(void)
     Controller1.ButtonL1.pressed(actuateBothWings);
     Controller1.ButtonL2.pressed(actuateIntakePiston);
     Controller1.ButtonDown.pressed(actuateBalancePiston);
+
+    // skills
+    // if (Controller1.ButtonRight.pressing())
+    // {
+    //   IntakePiston.off();
+    //   // wall ride matchload bar
+    //   chassis.drive_distance(25, 45, 6, 6);
+
+    //   // turn to goal
+    //   chassis.turn_to_angle(90);
+
+    //   // push triballs in goal
+    //   chassis.drive_distance(20, 90, 12, 12, 1.5, 100, 1000);
+
+    //   IntakePiston.off();
+
+    //   // back to matchload bar
+    //   chassis.drive_distance(-22, 90, 10, 12, 0.5, 100, 500);
+
+    //   // angle for matchloading
+    //   chassis.turn_to_angle(-20, 12, 1, 100, 1000);
+
+    //   // drive back to make sure we are touching the bar
+    //   chassis.drive_distance(3, -20, 10, 12, 0.5, 100, 150);
+
+    //   // wing
+    //   LeftWing.off();
+
+    //   // matchload
+    //   KickerMotor.spin(fwd, 12, volt);
+    //   KickerMotor2.spin(fwd, 12, volt);
+    //   wait(26, sec); // 26
+    //   KickerMotor.stop();
+    //   KickerMotor2.stop();
+
+    //   // make the kicker go down
+    //   // moving kicker under
+    //   while (KickerRotation.angle() > 300 || KickerRotation.angle() < 10)
+    //   {
+    //     Controller1.Screen.print("Hello");
+    //     KickerMotor.spin(fwd, 12, volt);
+    //     KickerMotor2.spin(fwd, 12, volt);
+    //   }
+    //   // hold position of kicker motor
+    //   KickerMotor.stop(hold);
+    //   KickerMotor2.stop(hold);
+
+    //   // left wing close
+    //   LeftWing.on();
+    // }
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

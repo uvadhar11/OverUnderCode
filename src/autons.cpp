@@ -73,7 +73,7 @@ void winpoint_auton()
   chassis.turn_to_angle(-45);
 
   // drive forward to touch the elevation bar
-  chassis.drive_distance(10);
+  chassis.drive_distance(12);
 
   // back out a bit
   IntakeFlywheelMotor.spin(fwd, -12, volt);
@@ -291,7 +291,7 @@ void odom_test()
   LeftBackMotor.spin(fwd, 12, volt);
   RightBackMotor.spin(fwd, 12, volt);
 
-  wait(1.75, sec);
+  wait(2.5, sec);
 
   LeftFrontMotor.stop();
   RightFrontMotor.stop();
@@ -328,20 +328,62 @@ void tank_odom_test()
   // chassis.turn_to_angle(0);
 
   // activate right wing, Start pos: 45 degree angle wedge first to most middle triball
+  // RightWing.off();
+
+  // // drive into middle triball
+  // // goodPID(-2100, 1, 0, 2000);
+
+  // // turn to middle barrier
+  // // turnPID(45, 1);
+  // // chassis.drive_distance(-47, 45, 10, 0.3, 1.5, 100, 4000);
+  // chassis.drive_distance(-47);
+
+  // chassis.turn_to_angle(45);
+
+  // // close right wing
+  // RightWing.on();
+
+  // TEST KICKER DOWN
+  // matchload
+  // KickerMotor.spin(fwd, 12, volt);
+  // KickerMotor2.spin(fwd, 12, volt);
+  // wait(26, sec); // 26
+  // KickerMotor.stop();
+  // KickerMotor2.stop();
+
+  // make the kicker go down
+  // moving kicker under
+  // while (KickerRotation.angle() > 300 || KickerRotation.angle() < 10)
+  // {
+  //   Controller1.Screen.print("Hello");
+  //   KickerMotor.spin(fwd, 12, volt);
+  //   KickerMotor2.spin(fwd, 12, volt);
+  // }
+  // // hold position of kicker motor
+  // KickerMotor.stop(hold);
+  // KickerMotor2.stop(hold);
+
+  // wing push alliance?
   RightWing.off();
-
-  // drive into middle triball
-  // goodPID(-2100, 1, 0, 2000);
-
-  // turn to middle barrier
-  // turnPID(45, 1);
-  // chassis.drive_distance(-47, 45, 10, 0.3, 1.5, 100, 4000);
-  chassis.drive_distance(-47);
-
-  chassis.turn_to_angle(45);
-
-  // close right wing
+  wait(0.15, sec);
   RightWing.on();
+  wait(0.15, sec);
+
+  // drive to mid triballs
+  chassis.drive_distance(42, 0, 10, 12, 0.5, 50, 1200);
+
+  // turn to mid triballs
+  chassis.turn_to_angle(90);
+
+  IntakeFlywheelMotor.spin(reverse, 12, volt);
+
+  // wing off
+  LeftWing.off();
+
+  wait(0.18, sec);
+
+  // drive to push
+  chassis.drive_distance(26, 90, 10, 12, 0.5, 100, 800);
 }
 
 void holonomic_odom_test()
@@ -355,6 +397,7 @@ void holonomic_odom_test()
 
   // chassis.drive_distance(-12);
   // chassis.turn_to_angle(90);
+  IntakePiston.on();
   // wall ride matchload bar
   chassis.drive_distance(25, 45, 6, 6);
 
@@ -362,21 +405,43 @@ void holonomic_odom_test()
   chassis.turn_to_angle(90);
 
   // push triballs in goal
-  chassis.drive_distance(20, 90, 10, 12, 1.5, 100, 1000);
+  chassis.drive_distance(20, 90, 12, 12, 1.5, 100, 1000);
+
+  IntakePiston.off();
 
   // back to matchload bar
-  chassis.drive_distance(-22);
+  chassis.drive_distance(-22, 90, 10, 12, 0.5, 100, 500);
 
   // angle for matchloading
-  chassis.turn_to_angle(-20);
+  chassis.turn_to_angle(-20, 12, 1, 100, 1000);
 
   // drive back to make sure we are touching the bar
-  chassis.drive_distance(3);
+  chassis.drive_distance(3, -20, 10, 12, 0.5, 100, 150);
+
+  // wing
+  LeftWing.off();
 
   // matchload
-  KickerMotor.spin(fwd, 11, volt);
-  wait(1, sec); // 26
+  KickerMotor.spin(fwd, 12, volt);
+  KickerMotor2.spin(fwd, 12, volt);
+  wait(26, sec); // 26
   KickerMotor.stop();
+  KickerMotor2.stop();
+
+  // make the kicker go down
+  // moving kicker under
+  while (KickerRotation.angle() > 300 || KickerRotation.angle() < 10)
+  {
+    Controller1.Screen.print("Hello");
+    KickerMotor.spin(fwd, 12, volt);
+    KickerMotor2.spin(fwd, 12, volt);
+  }
+  // hold position of kicker motor
+  KickerMotor.stop(hold);
+  KickerMotor2.stop(hold);
+
+  // left wing close
+  LeftWing.on();
 
   // drive forward to mid triballs
   chassis.drive_distance(-41, -20, 10, 12, 0.5, 100, 1000);
@@ -388,9 +453,12 @@ void holonomic_odom_test()
   RightWing.off();
   LeftWing.off();
 
+  // intake so triball not stuck
+  IntakePiston.off();
+
   // IntakeFlywheelMotor.spin(fwd, -12, volt);
 
-  // drive all
+  // drive all to clean up mid triballs
   chassis.drive_distance(67, 90, 10, 12, 0.5, 100, 2000);
 
   // close wings
@@ -407,6 +475,9 @@ void holonomic_odom_test()
 
   // turn to cross side
   chassis.turn_to_angle(90);
+
+  // intake back up
+  IntakePiston.on();
 
   // wings
   RightWing.off();
@@ -461,77 +532,115 @@ void holonomic_odom_test()
   RightWing.off();
   LeftWing.on();
 
-  // drive forward to score - first push
-  chassis.drive_distance(46, 225, 10, 12, 0.5, 100, 1100);
+  // drive forward to score - first push (angled)
+  chassis.drive_distance(46, 225, 8, 12, 0.5, 100, 1500);
 
   // wing off
   RightWing.on();
 
-  // drive back
+  // wait for retraction
+  wait(0.1, sec);
+
+  // drive back from first push
   chassis.drive_distance(-36, 225, 8, 12, 0.5, 100, 900);
 
-  // turn
+  // turn to move along mid
   chassis.turn_to_angle(270);
 
-  // wing
+  // wing active for funneling
   RightWing.off();
 
-  // drive forward
+  // drive forward along mid
   chassis.drive_distance(26, 270, 10, 12, 0.5, 100, 600);
 
-  // turn to goal
+  // turn to goal to do 2nd push
   chassis.turn_to_angle(180);
 
-  // wings
+  // wings to score
   RightWing.off();
   LeftWing.off();
 
-  // drive to score
+  // drive to score (2nd push)
   chassis.drive_distance(40, 180, 10, 12, 0.5, 100, 800);
 
-  // wings
+  // wings (off wings)
   RightWing.on();
   LeftWing.on();
 
-  // drive back
+  // wait for actuation of wings
+  wait(0.1, sec);
+
+  // drive back to mid
   chassis.drive_distance(-38, 180, 10, 12, 0.5, 100, 800);
 
-  // turn
+  // turn to mid line
   chassis.turn_to_angle(270);
 
-  // drive forward
-  chassis.drive_distance(14, 270, 10, 12, 0.5, 100, 500);
+  // drive forward along mid line
+  chassis.drive_distance(17, 270, 10, 12, 0.5, 100, 500);
 
-  // turn
-  chassis.turn_to_angle(140);
+  // turn for end angle push
+  chassis.turn_to_angle(160);
 
-  // wing
+  // wing for funneling
   LeftWing.off();
+  RightWing.off();
 
-  // drive to score
+  // drive to score (end angle push)
   chassis.drive_distance(40, 150, 10, 12, 0.5, 100, 800);
 
   // wings off
   LeftWing.on();
 
   // drive back
-  chassis.drive_distance(-38, 150, 10, 12, 0.5, 100, 800);
+  chassis.drive_distance(-34, 150, 10, 12, 0.5, 100, 800);
 
   // turn
-  chassis.turn_to_angle(270);
+  chassis.turn_to_angle(225);
 
   // both wings
   LeftWing.off();
   RightWing.off();
 
-  // drive forward
-  chassis.drive_distance(26, 270, 10, 12, 0.5, 100, 700);
+  // drive fwd
+  chassis.drive_distance(30, 225, 10, 12, 0.5, 100, 600);
 
   // turn
-  chassis.turn_to_angle(225);
+  chassis.turn_to_angle(270);
 
-  // drive
-  chassis.drive_distance(38, 225, 8, 12, 0.5, 100, 800);
+  // drive fwd
+  chassis.drive_distance(12, 270, 10, 12, 0.5, 100, 300);
+
+  // turn to bowl
+  chassis.turn_to_angle(180);
+
+  // BOWLING
+  // slow to make sure triballs don't fly over into zone
+  chassis.drive_distance(24, 180, 6, 6, 1.5, 100, 1000);
+
+  // angle and drive to score
+  chassis.drive_distance(20, 135, 10, 12, 0.5, 100, 700);
+  LeftWing.on();
+  // IntakeFlywheelMotor.spin(fwd, -12, volt);
+  chassis.drive_distance(20, 90, 10, 12, 0.5, 100, 700);
+
+  // back
+  chassis.drive_distance(-10, 90, 10, 12, 0.5, 100, 400);
+
+  // go
+  chassis.drive_distance(14, 90, 10, 12, 0.5, 100, 500);
+
+  // back
+  chassis.drive_distance(-8, 90, 10, 12, 0.5, 100, 400);
+
+  // drive forward
+  // chassis.drive_distance(26, 270, 10, 12, 0.5, 100, 700);
+
+  // // turn
+  // chassis.turn_to_angle(225);
+
+  // // drive
+  // chassis.drive_distance(38, 225, 8, 12, 0.5, 100, 800);
 
   //
 
