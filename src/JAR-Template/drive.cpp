@@ -147,6 +147,7 @@ void Drive::turn_to_angle(float angle, float turn_max_voltage, float turn_settle
   turn_to_angle(angle, turn_max_voltage, turn_settle_error, turn_settle_time, turn_timeout, turn_kp, turn_ki, turn_kd, turn_starti);
 }
 
+// turn to angle method on the drive
 void Drive::turn_to_angle(float angle, float turn_max_voltage, float turn_settle_error, float turn_settle_time, float turn_timeout, float turn_kp, float turn_ki, float turn_kd, float turn_starti)
 {
   desired_heading = angle;
@@ -475,6 +476,7 @@ void Drive::holonomic_drive_to_point(float X_position, float Y_position, float a
 // The usercontrol functions use deadband=5 everywhere. This value pretty much gets the job done,
 // but it can be changed with no repercussions.
 
+// arcade drive
 void Drive::control_arcade()
 {
   // deadband is a function taking the value and the 2nd parameter is the deadzone width
